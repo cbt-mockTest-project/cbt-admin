@@ -9,12 +9,6 @@ const config = {
       plugins: ['typescript-operations', 'typescript-urql'],
       config: { withHooks: true },
     },
-    'pages/': {
-      preset: 'near-operation-file',
-      presetConfig: { extension: '.generated.tsx', baseTypesPath: 'types.ts' },
-      plugins: ['typescript-operations', 'typescript-urql'],
-      config: { withHooks: true },
-    },
   },
 };
 export default config;

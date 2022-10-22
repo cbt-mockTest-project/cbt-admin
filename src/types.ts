@@ -291,12 +291,17 @@ export type Query = {
   readAllMockExamCategories: ReadAllMockExamCategoriesOutput;
   readAllMockExamQuestion: ReadAllMockExamQuestionOutput;
   readAllMockExamQuestionFeedback: ReadAllMockExamQuestionFeedbackOutput;
+  readMockExam: ReadMockExamOutput;
   searchMockExam: SearchMockExamOutput;
   userProfile: UserProfileOutput;
 };
 
 export type QueryReadAllMockExamArgs = {
   input: ReadAllMockExamsInput;
+};
+
+export type QueryReadMockExamArgs = {
+  input: ReadMockExamInput;
 };
 
 export type QuerySearchMockExamArgs = {
@@ -336,6 +341,17 @@ export type ReadAllMockExamsOutput = {
   __typename?: 'ReadAllMockExamsOutput';
   error?: Maybe<Scalars['String']>;
   mockExams: Array<MockExam>;
+  ok: Scalars['Boolean'];
+};
+
+export type ReadMockExamInput = {
+  id: Scalars['Float'];
+};
+
+export type ReadMockExamOutput = {
+  __typename?: 'ReadMockExamOutput';
+  error?: Maybe<Scalars['String']>;
+  mockExam: MockExam;
   ok: Scalars['Boolean'];
 };
 
