@@ -27,6 +27,41 @@ export type SearchMockExamQuery = {
   };
 };
 
+export type ReadMockExamQueryVariables = Types.Exact<{
+  input: Types.ReadMockExamInput;
+}>;
+
+export type ReadMockExamQuery = {
+  __typename?: 'Query';
+  readMockExam: {
+    __typename?: 'ReadMockExamOutput';
+    mockExam: {
+      __typename?: 'MockExam';
+      title: string;
+      approved: boolean;
+      mockExamQuestion: Array<{
+        __typename?: 'MockExamQuestion';
+        question: string;
+        solution: string;
+        id: number;
+        question_img?: Array<{
+          __typename?: 'MockExamQuestionImage';
+          url: string;
+        }> | null;
+        solution_img?: Array<{
+          __typename?: 'MockExamQuestionImage';
+          url: string;
+        }> | null;
+        mockExamQuestionFeedback: Array<{
+          __typename?: 'MockExamQuestionFeedback';
+          content: string;
+          id: number;
+        }>;
+      }>;
+    };
+  };
+};
+
 export const ReadAllMockExamDocument = gql`
   query ReadAllMockExam($input: ReadAllMockExamsInput!) {
     readAllMockExam(input: $input) {
@@ -62,6 +97,40 @@ export function useSearchMockExamQuery(
 ) {
   return Urql.useQuery<SearchMockExamQuery, SearchMockExamQueryVariables>({
     query: SearchMockExamDocument,
+    ...options,
+  });
+}
+export const ReadMockExamDocument = gql`
+  query ReadMockExam($input: ReadMockExamInput!) {
+    readMockExam(input: $input) {
+      mockExam {
+        title
+        approved
+        mockExamQuestion {
+          question
+          solution
+          question_img {
+            url
+          }
+          solution_img {
+            url
+          }
+          id
+          mockExamQuestionFeedback {
+            content
+            id
+          }
+        }
+      }
+    }
+  }
+`;
+
+export function useReadMockExamQuery(
+  options: Omit<Urql.UseQueryArgs<ReadMockExamQueryVariables>, 'query'>
+) {
+  return Urql.useQuery<ReadMockExamQuery, ReadMockExamQueryVariables>({
+    query: ReadMockExamDocument,
     ...options,
   });
 }

@@ -2,6 +2,9 @@ import { gql, useLazyQuery, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import {
   ReadAllMockExamQuery,
+  ReadAllMockExamQueryVariables,
+  ReadMockExamQuery,
+  ReadMockExamQueryVariables,
   SearchMockExamQuery,
   SearchMockExamQueryVariables,
 } from './useMockExams.generated';
@@ -28,15 +31,57 @@ const SearchMockExam_QUERY = gql`
   }
 `;
 
+export const ReadMockExam_Query = gql`
+  query ReadMockExam($input: ReadMockExamInput!) {
+    readMockExam(input: $input) {
+      mockExam {
+        title
+        approved
+        mockExamQuestion {
+          question
+          solution
+          question_img {
+            url
+          }
+          solution_img {
+            url
+          }
+          id
+          mockExamQuestionFeedback {
+            content
+            id
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const useReadMockExam = () => {
+  const router = useRouter();
+  return useQuery<ReadMockExamQuery, ReadMockExamQueryVariables>(
+    ReadMockExam_Query,
+    {
+      variables: {
+        input: {
+          id: Number(router.query.id) || 0,
+        },
+      },
+    }
+  );
+};
 export const useReadMockExams = () => {
   const router = useRouter();
-  return useQuery<ReadAllMockExamQuery>(ReadAllMockExam_QUERY, {
-    variables: {
-      input: {
-        query: router.query.s || '',
+  return useQuery<ReadAllMockExamQuery, ReadAllMockExamQueryVariables>(
+    ReadAllMockExam_QUERY,
+    {
+      variables: {
+        input: {
+          query: router.query.s === undefined ? '' : String(router.query.s),
+        },
       },
-    },
-  });
+    }
+  );
 };
 
 export const useSearchMockExams = () =>
