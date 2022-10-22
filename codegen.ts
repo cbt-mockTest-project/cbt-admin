@@ -1,6 +1,6 @@
 const config = {
   schema: 'http://localhost:8070/graphql',
-  documents: 'src/**/!(*.generated).{ts,tsx}',
+  documents: ['src/**/!(*.generated).{ts,tsx}'],
   generates: {
     'src/types.ts': ['typescript'],
     'src/': {
@@ -16,5 +16,5 @@ const config = {
       config: { withHooks: true },
     },
   },
-}
-export default config
+};
+export default config;
