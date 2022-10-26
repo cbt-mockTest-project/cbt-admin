@@ -6,19 +6,19 @@ import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
 import Layout from '../src/components/layout/Layout';
 import {
-  useReadMockExams,
+  useReadAllMockExams,
   useSearchMockExams,
 } from '../src/lib/hooks/useMockExams';
 import { MockExamRoutes } from '../src/lib/routes';
 
-interface SearchOptionType {
-  value: string;
-  label: string;
+export interface SearchOptionType {
+  value: any;
+  label: any;
 }
 
 const Home: NextPage = () => {
   const router = useRouter();
-  const { data } = useReadMockExams();
+  const { data } = useReadAllMockExams();
   const [convertedSearchData, setConvertedSearchData] = useState<
     SearchOptionType[]
   >([]);
