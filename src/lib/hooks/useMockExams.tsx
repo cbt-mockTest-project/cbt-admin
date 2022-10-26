@@ -1,61 +1,19 @@
-import { gql, useLazyQuery, useQuery } from '@apollo/client';
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
-import {
-  ReadAllMockExamQuery,
-  ReadAllMockExamQueryVariables,
-  ReadMockExamQuery,
-  ReadMockExamQueryVariables,
-  SearchMockExamQuery,
-  SearchMockExamQueryVariables,
-} from './useMockExams.generated';
+import { CreateMockExam_Mutation } from '../grapql/mutation';
+import { CreateMockExamMutation, CreateMockExamMutationVariables } from '../grapql/mutation.generated';
+import { ReadAllMockExamCategory_Query, ReadAllMockExam_QUERY, ReadMockExam_Query, SearchMockExam_QUERY } from '../grapql/query';
+import { ReadAllMockExamCategoriesQuery, ReadAllMockExamCategoriesQueryVariables, ReadAllMockExamQuery, ReadAllMockExamQueryVariables, ReadMockExamQuery, ReadMockExamQueryVariables, SearchMockExamQuery, SearchMockExamQueryVariables } from '../grapql/query.generated';
 
-const ReadAllMockExam_QUERY = gql`
-  query ReadAllMockExam($input: ReadAllMockExamsInput!) {
-    readAllMockExam(input: $input) {
-      mockExams {
-        title
-        id
-      }
-    }
-  }
-`;
 
-const SearchMockExam_QUERY = gql`
-  query SearchMockExam($input: SearchMockExamInput!) {
-    searchMockExam(input: $input) {
-      mockExams {
-        id
-        title
-      }
-    }
-  }
-`;
 
-export const ReadMockExam_Query = gql`
-  query ReadMockExam($input: ReadMockExamInput!) {
-    readMockExam(input: $input) {
-      mockExam {
-        title
-        approved
-        mockExamQuestion {
-          question
-          solution
-          question_img {
-            url
-          }
-          solution_img {
-            url
-          }
-          id
-          mockExamQuestionFeedback {
-            content
-            id
-          }
-        }
-      }
-    }
-  }
-`;
+
+export const useReadAllMockExamCategory = () => {
+  return useQuery<
+    ReadAllMockExamCategoriesQuery,
+    ReadAllMockExamCategoriesQueryVariables
+  >(ReadAllMockExamCategory_Query);
+};
 
 export const useReadMockExam = () => {
   const router = useRouter();
@@ -70,7 +28,8 @@ export const useReadMockExam = () => {
     }
   );
 };
-export const useReadMockExams = () => {
+
+export const useReadAllMockExams = () => {
   const router = useRouter();
   return useQuery<ReadAllMockExamQuery, ReadAllMockExamQueryVariables>(
     ReadAllMockExam_QUERY,
@@ -78,9 +37,16 @@ export const useReadMockExams = () => {
       variables: {
         input: {
           query: router.query.s === undefined ? '' : String(router.query.s),
+          category: router.query.c === undefined ? '' : String(router.query.c),
         },
       },
     }
+  );
+};
+
+export const useReadAllMockExamsByCategory = () => {
+  return useLazyQuery<ReadAllMockExamQuery, ReadAllMockExamQueryVariables>(
+    ReadAllMockExam_QUERY
   );
 };
 
@@ -88,3 +54,9 @@ export const useSearchMockExams = () =>
   useLazyQuery<SearchMockExamQuery, SearchMockExamQueryVariables>(
     SearchMockExam_QUERY
   );
+
+export const useCreateMockExam = () => {
+  return useMutation<CreateMockExamMutation, CreateMockExamMutationVariables>(
+    CreateMockExam_Mutation
+  );
+};
