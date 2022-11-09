@@ -15,5 +15,6 @@ export const FULL_QUESTION_FRAGMENT = gql`
       content
       id
     }
+    number
   }
 `;

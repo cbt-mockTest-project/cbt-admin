@@ -7,84 +7,58 @@ export type CreateMockExamMutationVariables = Types.Exact<{
   input: Types.CreateMockExamInput;
 }>;
 
-export type CreateMockExamMutation = {
-  __typename?: 'Mutation';
-  createMockExam: {
-    __typename?: 'CreateMockExamOutput';
-    error?: string | null;
-    ok: boolean;
-  };
-};
+
+export type CreateMockExamMutation = { __typename?: 'Mutation', createMockExam: { __typename?: 'CreateMockExamOutput', error?: string | null, ok: boolean } };
 
 export type DeleteMockExamQuestionFeedbackMutationVariables = Types.Exact<{
   input: Types.DeleteMockExamQuestionFeedbackInput;
 }>;
 
-export type DeleteMockExamQuestionFeedbackMutation = {
-  __typename?: 'Mutation';
-  deleteMockExamQuestionFeedback: {
-    __typename?: 'DeleteMockExamQuestionFeedbackOutput';
-    error?: string | null;
-    ok: boolean;
-  };
-};
+
+export type DeleteMockExamQuestionFeedbackMutation = { __typename?: 'Mutation', deleteMockExamQuestionFeedback: { __typename?: 'DeleteMockExamQuestionFeedbackOutput', error?: string | null, ok: boolean } };
 
 export type LoginMutationVariables = Types.Exact<{
   input: Types.LoginInput;
 }>;
 
-export type LoginMutation = {
-  __typename?: 'Mutation';
-  login: {
-    __typename?: 'LoginOutput';
-    ok: boolean;
-    error?: string | null;
-    token?: string | null;
-  };
-};
+
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginOutput', ok: boolean, error?: string | null, token?: string | null } };
+
 
 export const CreateMockExamDocument = gql`
-  mutation CreateMockExam($input: CreateMockExamInput!) {
-    createMockExam(input: $input) {
-      error
-      ok
-    }
+    mutation CreateMockExam($input: CreateMockExamInput!) {
+  createMockExam(input: $input) {
+    error
+    ok
   }
-`;
+}
+    `;
 
 export function useCreateMockExamMutation() {
-  return Urql.useMutation<
-    CreateMockExamMutation,
-    CreateMockExamMutationVariables
-  >(CreateMockExamDocument);
-}
+  return Urql.useMutation<CreateMockExamMutation, CreateMockExamMutationVariables>(CreateMockExamDocument);
+};
 export const DeleteMockExamQuestionFeedbackDocument = gql`
-  mutation DeleteMockExamQuestionFeedback(
-    $input: DeleteMockExamQuestionFeedbackInput!
-  ) {
-    deleteMockExamQuestionFeedback(input: $input) {
-      error
-      ok
-    }
+    mutation DeleteMockExamQuestionFeedback($input: DeleteMockExamQuestionFeedbackInput!) {
+  deleteMockExamQuestionFeedback(input: $input) {
+    error
+    ok
   }
-`;
+}
+    `;
 
 export function useDeleteMockExamQuestionFeedbackMutation() {
-  return Urql.useMutation<
-    DeleteMockExamQuestionFeedbackMutation,
-    DeleteMockExamQuestionFeedbackMutationVariables
-  >(DeleteMockExamQuestionFeedbackDocument);
-}
+  return Urql.useMutation<DeleteMockExamQuestionFeedbackMutation, DeleteMockExamQuestionFeedbackMutationVariables>(DeleteMockExamQuestionFeedbackDocument);
+};
 export const LoginDocument = gql`
-  mutation Login($input: LoginInput!) {
-    login(input: $input) {
-      ok
-      error
-      token
-    }
+    mutation Login($input: LoginInput!) {
+  login(input: $input) {
+    ok
+    error
+    token
   }
-`;
+}
+    `;
 
 export function useLoginMutation() {
   return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
-}
+};

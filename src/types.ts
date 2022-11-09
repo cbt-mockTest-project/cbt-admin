@@ -185,6 +185,13 @@ export type MockExamCategory = {
   updated_at: Scalars['DateTime'];
 };
 
+export type MockExamImageType = {
+  __typename?: 'MockExamImageType';
+  name: Scalars['String'];
+  uid: Scalars['String'];
+  url: Scalars['String'];
+};
+
 export type MockExamQuestion = {
   __typename?: 'MockExamQuestion';
   approved: Scalars['Boolean'];
@@ -194,9 +201,9 @@ export type MockExamQuestion = {
   mockExamQuestionFeedback: Array<MockExamQuestionFeedback>;
   number: Scalars['Float'];
   question: Scalars['String'];
-  question_img?: Maybe<Array<MockExamQuestionImage>>;
+  question_img?: Maybe<Array<MockExamImageType>>;
   solution: Scalars['String'];
-  solution_img?: Maybe<Array<MockExamQuestionImage>>;
+  solution_img?: Maybe<Array<MockExamImageType>>;
   state: Array<MockExamQuestionState>;
   updated_at: Scalars['DateTime'];
 };
@@ -210,12 +217,9 @@ export type MockExamQuestionFeedback = {
   updated_at: Scalars['DateTime'];
 };
 
-export type MockExamQuestionImage = {
-  __typename?: 'MockExamQuestionImage';
-  url: Scalars['String'];
-};
-
 export type MockExamQuestionImageInputType = {
+  name: Scalars['String'];
+  uid: Scalars['String'];
   url: Scalars['String'];
 };
 
