@@ -1,9 +1,8 @@
-import { gql } from '@apollo/client'
-import React from 'react'
-import Nav from './Nav'
+import React from 'react';
+import Nav from './Nav';
 
 interface LayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
@@ -12,7 +11,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <Nav />
       <section className="max-w-screen-xl mx-auto py-5">{children}</section>
     </div>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;

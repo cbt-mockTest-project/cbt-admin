@@ -1,14 +1,8 @@
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]?: Maybe<T[SubKey]>;
-};
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]: Maybe<T[SubKey]>;
-};
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -52,7 +46,8 @@ export type CreateMockExamQuestionFeedbackOutput = {
 };
 
 export type CreateMockExamQuestionInput = {
-  mockExamTitle: Scalars['String'];
+  mockExamId: Scalars['Float'];
+  number: Scalars['Float'];
   question: Scalars['String'];
   question_img?: InputMaybe<Array<MockExamQuestionImageInputType>>;
   solution: Scalars['String'];
@@ -62,6 +57,18 @@ export type CreateMockExamQuestionInput = {
 export type CreateMockExamQuestionOutput = {
   __typename?: 'CreateMockExamQuestionOutput';
   error?: Maybe<Scalars['String']>;
+  ok: Scalars['Boolean'];
+};
+
+export type CreateOrUpdateMockExamQuestionStateInput = {
+  questionId: Scalars['Float'];
+  state: QuestionState;
+};
+
+export type CreateOrUpdateMockExamQuestionStateOutput = {
+  __typename?: 'CreateOrUpdateMockExamQuestionStateOutput';
+  error?: Maybe<Scalars['String']>;
+  message?: Maybe<Scalars['String']>;
   ok: Scalars['Boolean'];
 };
 
@@ -155,7 +162,7 @@ export type LoginOutput = {
   __typename?: 'LoginOutput';
   error?: Maybe<Scalars['String']>;
   ok: Scalars['Boolean'];
-  token: Scalars['String'];
+  token?: Maybe<Scalars['String']>;
 };
 
 export type MockExam = {
@@ -178,6 +185,13 @@ export type MockExamCategory = {
   updated_at: Scalars['DateTime'];
 };
 
+export type MockExamImageType = {
+  __typename?: 'MockExamImageType';
+  name: Scalars['String'];
+  uid: Scalars['String'];
+  url: Scalars['String'];
+};
+
 export type MockExamQuestion = {
   __typename?: 'MockExamQuestion';
   approved: Scalars['Boolean'];
@@ -185,10 +199,12 @@ export type MockExamQuestion = {
   id: Scalars['Float'];
   mockExam: MockExam;
   mockExamQuestionFeedback: Array<MockExamQuestionFeedback>;
+  number: Scalars['Float'];
   question: Scalars['String'];
-  question_img?: Maybe<Array<MockExamQuestionImage>>;
+  question_img?: Maybe<Array<MockExamImageType>>;
   solution: Scalars['String'];
-  solution_img?: Maybe<Array<MockExamQuestionImage>>;
+  solution_img?: Maybe<Array<MockExamImageType>>;
+  state: Array<MockExamQuestionState>;
   updated_at: Scalars['DateTime'];
 };
 
@@ -201,13 +217,20 @@ export type MockExamQuestionFeedback = {
   updated_at: Scalars['DateTime'];
 };
 
-export type MockExamQuestionImage = {
-  __typename?: 'MockExamQuestionImage';
+export type MockExamQuestionImageInputType = {
+  name: Scalars['String'];
+  uid: Scalars['String'];
   url: Scalars['String'];
 };
 
-export type MockExamQuestionImageInputType = {
-  url: Scalars['String'];
+export type MockExamQuestionState = {
+  __typename?: 'MockExamQuestionState';
+  created_at: Scalars['DateTime'];
+  id: Scalars['Float'];
+  mockExamQuestion: MockExamQuestion;
+  state: QuestionState;
+  updated_at: Scalars['DateTime'];
+  user: User;
 };
 
 export type Mutation = {
@@ -216,6 +239,7 @@ export type Mutation = {
   createMockExamCategory: CreateMockExamCategoryOutput;
   createMockExamQuestion: CreateMockExamQuestionOutput;
   createMockExamQuestionFeedback: CreateMockExamQuestionFeedbackOutput;
+  createOrUpdateMockExamQuestionState: CreateOrUpdateMockExamQuestionStateOutput;
   deleteMockExam: DeleteMockExamOutput;
   deleteMockExamCategory: DeleteMockExamCategoryOutput;
   deleteMockExamQuestion: DeleteMockExamQuestionOutput;
@@ -225,60 +249,85 @@ export type Mutation = {
   editMockExamQuestion: EditMockExamQuestionOutput;
   editMockExamQuestionFeedback: EditMockExamQuestionFeedbackOutput;
   login: LoginOutput;
+  readMockExamQuestionsByState: ReadMockExamQuestionsByStateOutput;
   register: RegisterOutput;
 };
+
 
 export type MutationCreateMockExamArgs = {
   input: CreateMockExamInput;
 };
 
+
 export type MutationCreateMockExamCategoryArgs = {
   input: CreateMockExamCategoryInput;
 };
+
 
 export type MutationCreateMockExamQuestionArgs = {
   input: CreateMockExamQuestionInput;
 };
 
+
 export type MutationCreateMockExamQuestionFeedbackArgs = {
   input: CreateMockExamQuestionFeedbackInput;
 };
+
+
+export type MutationCreateOrUpdateMockExamQuestionStateArgs = {
+  input: CreateOrUpdateMockExamQuestionStateInput;
+};
+
 
 export type MutationDeleteMockExamArgs = {
   input: DeleteMockExamInput;
 };
 
+
 export type MutationDeleteMockExamCategoryArgs = {
   input: DeleteMockExamCategoryInput;
 };
+
 
 export type MutationDeleteMockExamQuestionArgs = {
   input: DeleteMockExamQuestionInput;
 };
 
+
 export type MutationDeleteMockExamQuestionFeedbackArgs = {
   input: DeleteMockExamQuestionFeedbackInput;
 };
+
 
 export type MutationEditMockExamArgs = {
   input: EditMockExamInput;
 };
 
+
 export type MutationEditMockExamCategoryArgs = {
   input: EditMockExamCategoryInput;
 };
+
 
 export type MutationEditMockExamQuestionArgs = {
   input: EditMockExamQuestionInput;
 };
 
+
 export type MutationEditMockExamQuestionFeedbackArgs = {
   input: EditMockExamQuestionFeedbackInput;
 };
 
+
 export type MutationLoginArgs = {
   input: LoginInput;
 };
+
+
+export type MutationReadMockExamQuestionsByStateArgs = {
+  input: ReadMockExamQuestionsByStateInput;
+};
+
 
 export type MutationRegisterArgs = {
   input: RegisterInput;
@@ -292,25 +341,42 @@ export type Query = {
   readAllMockExamQuestion: ReadAllMockExamQuestionOutput;
   readAllMockExamQuestionFeedback: ReadAllMockExamQuestionFeedbackOutput;
   readMockExam: ReadMockExamOutput;
+  readMockExamQuestionNumbers: ReadMockExamQuestionNumbersOutput;
   searchMockExam: SearchMockExamOutput;
   userProfile: UserProfileOutput;
 };
+
 
 export type QueryReadAllMockExamArgs = {
   input: ReadAllMockExamsInput;
 };
 
+
 export type QueryReadMockExamArgs = {
   input: ReadMockExamInput;
 };
+
+
+export type QueryReadMockExamQuestionNumbersArgs = {
+  input: ReadMockExamQuestionNumbersInput;
+};
+
 
 export type QuerySearchMockExamArgs = {
   input: SearchMockExamInput;
 };
 
+
 export type QueryUserProfileArgs = {
   input: UserProfileInput;
 };
+
+export enum QuestionState {
+  Core = 'CORE',
+  High = 'HIGH',
+  Middle = 'MIDDLE',
+  Row = 'ROW'
+}
 
 export type ReadAllMockExamCategoriesOutput = {
   __typename?: 'ReadAllMockExamCategoriesOutput';
@@ -334,6 +400,7 @@ export type ReadAllMockExamQuestionOutput = {
 };
 
 export type ReadAllMockExamsInput = {
+  category?: InputMaybe<Scalars['String']>;
   query?: InputMaybe<Scalars['String']>;
 };
 
@@ -352,6 +419,30 @@ export type ReadMockExamOutput = {
   __typename?: 'ReadMockExamOutput';
   error?: Maybe<Scalars['String']>;
   mockExam: MockExam;
+  ok: Scalars['Boolean'];
+  questionNumbers: Array<Scalars['Float']>;
+};
+
+export type ReadMockExamQuestionNumbersInput = {
+  mockExamId: Scalars['Float'];
+};
+
+export type ReadMockExamQuestionNumbersOutput = {
+  __typename?: 'ReadMockExamQuestionNumbersOutput';
+  error?: Maybe<Scalars['String']>;
+  ok: Scalars['Boolean'];
+  questionNumbers: Array<Scalars['Float']>;
+};
+
+export type ReadMockExamQuestionsByStateInput = {
+  examId: Scalars['Float'];
+  state: QuestionState;
+};
+
+export type ReadMockExamQuestionsByStateOutput = {
+  __typename?: 'ReadMockExamQuestionsByStateOutput';
+  error?: Maybe<Scalars['String']>;
+  mockExamQusetions: Array<MockExamQuestion>;
   ok: Scalars['Boolean'];
 };
 
@@ -384,6 +475,7 @@ export type User = {
   created_at: Scalars['DateTime'];
   email: Scalars['String'];
   id: Scalars['Float'];
+  mockExamQuestionState: Array<MockExamQuestionState>;
   nickname: Scalars['String'];
   password: Scalars['String'];
   role: UserRole;
@@ -403,5 +495,5 @@ export type UserProfileOutput = {
 
 export enum UserRole {
   Admin = 'ADMIN',
-  Client = 'CLIENT',
+  Client = 'CLIENT'
 }

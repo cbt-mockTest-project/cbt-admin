@@ -28,7 +28,6 @@ const MockExamQuestion: React.FC<MockExamQuestionProps> = ({ question }) => {
             question.question_img.map((image) => (
               <Image
                 key={image.url}
-                className="flex items-center justify-center"
                 src={image.url}
                 width="300px"
                 height="300px"
@@ -43,7 +42,6 @@ const MockExamQuestion: React.FC<MockExamQuestionProps> = ({ question }) => {
             question.solution_img.map((image) => (
               <Image
                 key={image.url}
-                className="flex items-center justify-center"
                 src={image.url}
                 width="300px"
                 height="300px"

@@ -1,6 +1,6 @@
 import { Alert, Button, Space } from 'antd';
 import React, { useState } from 'react';
-import { useDeleteMockExamQuestion } from '../../lib/hooks/useMockExam';
+import { useDeleteMockExamQuestion } from '../../lib/hooks/useMockExamQuestion';
 
 interface MockExamQuestionDeleteButtonProps {
   feedBack: {
@@ -13,7 +13,7 @@ interface MockExamQuestionDeleteButtonProps {
 const MockExamQuestionDeleteButton: React.FC<
   MockExamQuestionDeleteButtonProps
 > = ({ feedBack }) => {
-  const [questionFeedbackMutation] = useDeleteMockExamQuestion(feedBack.id);
+  const [questionFeedbackMutation] = useDeleteMockExamQuestion();
   const [deleteAlertState, setDeleteAlertState] = useState(false);
   const onToggleDeleteAlert = () => setDeleteAlertState((state) => !state);
   const onDelete = (id: number) => {
