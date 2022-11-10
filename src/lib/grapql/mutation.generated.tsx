@@ -24,6 +24,13 @@ export type LoginMutationVariables = Types.Exact<{
 
 export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginOutput', ok: boolean, error?: string | null, token?: string | null } };
 
+export type CreateMockExamQuestionMutationVariables = Types.Exact<{
+  input: Types.CreateMockExamQuestionInput;
+}>;
+
+
+export type CreateMockExamQuestionMutation = { __typename?: 'Mutation', createMockExamQuestion: { __typename?: 'CreateMockExamQuestionOutput', ok: boolean, error?: string | null } };
+
 
 export const CreateMockExamDocument = gql`
     mutation CreateMockExam($input: CreateMockExamInput!) {
@@ -61,4 +68,16 @@ export const LoginDocument = gql`
 
 export function useLoginMutation() {
   return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
+};
+export const CreateMockExamQuestionDocument = gql`
+    mutation CreateMockExamQuestion($input: CreateMockExamQuestionInput!) {
+  createMockExamQuestion(input: $input) {
+    ok
+    error
+  }
+}
+    `;
+
+export function useCreateMockExamQuestionMutation() {
+  return Urql.useMutation<CreateMockExamQuestionMutation, CreateMockExamQuestionMutationVariables>(CreateMockExamQuestionDocument);
 };

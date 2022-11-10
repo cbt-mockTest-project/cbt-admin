@@ -1,7 +1,9 @@
-import { Select } from 'antd';
-import React, { useState } from 'react';
+import { Input, Select } from 'antd';
+import React, { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { SearchOptionType } from '../../../pages';
+import useInput from '../../lib/hooks/useInput';
+import { useLazyReadMockExamQuestionNumbers } from '../../lib/hooks/useMockExamQuestion';
 import {
   useReadAllMockExamCategory,
   useReadAllMockExamsByCategory,
@@ -21,7 +23,17 @@ const ExamSelect: React.FC = () => {
   const { data: allCategories } = useReadAllMockExamCategory();
   const [mockExams, setMockExams] = useState<SearchOptionType[]>([]);
   const [readMockExamsByCategory] = useReadAllMockExamsByCategory();
-
+  const { value: number, onChange: onChangeNumber } = useInput();
+  const [getQuestionNumbers, { data: ReadMockExamQuestionNumbersData }] =
+    useLazyReadMockExamQuestionNumbers();
+  const questionNumbers =
+    ReadMockExamQuestionNumbersData?.readMockExamQuestionNumbers
+      .questionNumbers;
+  useEffect(() => {
+    if (number) {
+      setValue('number', Number(number));
+    }
+  }, [number]);
   if (!allCategories) return null;
   const categoryArray: string[] =
     allCategories.readAllMockExamCategories.categories.map(
@@ -29,6 +41,7 @@ const ExamSelect: React.FC = () => {
     );
   const examCategories: OptionType[] =
     generateArrayForSelect<string>(categoryArray);
+
   const onSelectCategory = async (value: string) => {
     const { data } = await readMockExamsByCategory({
       variables: {
@@ -52,7 +65,15 @@ const ExamSelect: React.FC = () => {
   };
   const onSelectMockExams = async (id: string) => {
     setValue('mockExamId', Number(id));
+    await getQuestionNumbers({
+      variables: {
+        input: {
+          mockExamId: Number(id),
+        },
+      },
+    });
   };
+
   return (
     <>
       <RegisterExam examCategories={examCategories} />
@@ -68,6 +89,18 @@ const ExamSelect: React.FC = () => {
           options={mockExams}
           onSelect={onSelectMockExams}
         />
+      </div>
+      <div className="flex gap-4 items-center">
+        <div>문제번호</div>
+        <Input className="w-52" type="number" onChange={onChangeNumber} />
+      </div>
+      <div className="flex gap-4 items-center">
+        <div>등록된 문제</div>
+        <div>
+          {questionNumbers?.map((number, index) => (
+            <span key={index}>{number},</span>
+          ))}
+        </div>
       </div>
     </>
   );

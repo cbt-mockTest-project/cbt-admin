@@ -35,6 +35,13 @@ export type MeQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: number, nickname: string } };
 
+export type ReadMockExamQuestionNumbersQueryVariables = Types.Exact<{
+  input: Types.ReadMockExamQuestionNumbersInput;
+}>;
+
+
+export type ReadMockExamQuestionNumbersQuery = { __typename?: 'Query', readMockExamQuestionNumbers: { __typename?: 'ReadMockExamQuestionNumbersOutput', questionNumbers: Array<number> } };
+
 
 export const ReadAllMockExamCategoriesDocument = gql`
     query ReadAllMockExamCategories {
@@ -105,4 +112,15 @@ export const MeDocument = gql`
 
 export function useMeQuery(options?: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'>) {
   return Urql.useQuery<MeQuery, MeQueryVariables>({ query: MeDocument, ...options });
+};
+export const ReadMockExamQuestionNumbersDocument = gql`
+    query ReadMockExamQuestionNumbers($input: ReadMockExamQuestionNumbersInput!) {
+  readMockExamQuestionNumbers(input: $input) {
+    questionNumbers
+  }
+}
+    `;
+
+export function useReadMockExamQuestionNumbersQuery(options: Omit<Urql.UseQueryArgs<ReadMockExamQuestionNumbersQueryVariables>, 'query'>) {
+  return Urql.useQuery<ReadMockExamQuestionNumbersQuery, ReadMockExamQuestionNumbersQueryVariables>({ query: ReadMockExamQuestionNumbersDocument, ...options });
 };
