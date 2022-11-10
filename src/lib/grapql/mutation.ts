@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const CreateMockExam_Mutation = gql`
   mutation CreateMockExam($input: CreateMockExamInput!) {
@@ -26,6 +26,15 @@ export const LOGIN_MUTATION = gql`
       ok
       error
       token
+    }
+  }
+`;
+
+export const CreateMockExamQuestion_MUTATION = gql`
+  mutation CreateMockExamQuestion($input: CreateMockExamQuestionInput!) {
+    createMockExamQuestion(input: $input) {
+      ok
+      error
     }
   }
 `;

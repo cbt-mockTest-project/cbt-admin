@@ -1,12 +1,26 @@
 import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { CreateMockExam_Mutation } from '../grapql/mutation';
-import { CreateMockExamMutation, CreateMockExamMutationVariables } from '../grapql/mutation.generated';
-import { ReadAllMockExamCategory_Query, ReadAllMockExam_QUERY, ReadMockExam_Query, SearchMockExam_QUERY } from '../grapql/query';
-import { ReadAllMockExamCategoriesQuery, ReadAllMockExamCategoriesQueryVariables, ReadAllMockExamQuery, ReadAllMockExamQueryVariables, ReadMockExamQuery, ReadMockExamQueryVariables, SearchMockExamQuery, SearchMockExamQueryVariables } from '../grapql/query.generated';
-
-
-
+import {
+  CreateMockExamMutation,
+  CreateMockExamMutationVariables,
+} from '../grapql/mutation.generated';
+import {
+  ReadAllMockExamCategory_Query,
+  ReadAllMockExam_QUERY,
+  ReadMockExam_Query,
+  SearchMockExam_QUERY,
+} from '../grapql/query';
+import {
+  ReadAllMockExamCategoriesQuery,
+  ReadAllMockExamCategoriesQueryVariables,
+  ReadAllMockExamQuery,
+  ReadAllMockExamQueryVariables,
+  ReadMockExamQuery,
+  ReadMockExamQueryVariables,
+  SearchMockExamQuery,
+  SearchMockExamQueryVariables,
+} from '../grapql/query.generated';
 
 export const useReadAllMockExamCategory = () => {
   return useQuery<
@@ -26,6 +40,12 @@ export const useReadMockExam = () => {
         },
       },
     }
+  );
+};
+
+export const useLazyReadMockExam = () => {
+  return useLazyQuery<ReadMockExamQuery, ReadMockExamQueryVariables>(
+    ReadMockExam_Query
   );
 };
 
@@ -57,6 +77,9 @@ export const useSearchMockExams = () =>
 
 export const useCreateMockExam = () => {
   return useMutation<CreateMockExamMutation, CreateMockExamMutationVariables>(
-    CreateMockExam_Mutation
+    CreateMockExam_Mutation,
+    {
+      refetchQueries: [{ query: ReadAllMockExam_QUERY }, 'ReadAllMockExam'],
+    }
   );
 };

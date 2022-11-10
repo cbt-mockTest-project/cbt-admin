@@ -56,3 +56,11 @@ export const ME_QUERY = gql`
     }
   }
 `;
+
+export const ReadMockExamQuestionNumbers_Query = gql`
+  query ReadMockExamQuestionNumbers($input: ReadMockExamQuestionNumbersInput!) {
+    readMockExamQuestionNumbers(input: $input) {
+      questionNumbers
+    }
+  }
+`;
