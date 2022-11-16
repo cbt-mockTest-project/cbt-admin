@@ -1,13 +1,18 @@
 import { useLazyQuery, useMutation } from '@apollo/client';
 import {
   CreateMockExamQuestion_MUTATION,
-  Delet_Mock_Exam_Question_Feedback_Mutation,
+  DeleteMockExamQuestionFeedback_MUTATION,
+  DeleteMockExamQuestion_MUTATION,
+  UpdateApprovedStateOfMockExamQuestion_MUTATION,
 } from '../grapql/mutation';
 import {
   CreateMockExamQuestionMutation,
   CreateMockExamQuestionMutationVariables,
   DeleteMockExamQuestionFeedbackMutation,
   DeleteMockExamQuestionFeedbackMutationVariables,
+  DeleteMockExamQuestionMutation,
+  UpdateApprovedStateOfMockExamQuestionMutation,
+  UpdateApprovedStateOfMockExamQuestionMutationVariables,
 } from '../grapql/mutation.generated';
 import {
   ReadMockExamQuestionNumbers_Query,
@@ -18,11 +23,20 @@ import {
   ReadMockExamQuestionNumbersQueryVariables,
 } from '../grapql/query.generated';
 
-export const useDeleteMockExamQuestion = () => {
+export const useDeleteMockExamQuestionFeedBack = () => {
   return useMutation<
     DeleteMockExamQuestionFeedbackMutation,
     DeleteMockExamQuestionFeedbackMutationVariables
-  >(Delet_Mock_Exam_Question_Feedback_Mutation, {
+  >(DeleteMockExamQuestionFeedback_MUTATION, {
+    refetchQueries: [{ query: ReadMockExam_Query }, 'ReadMockExam'],
+  });
+};
+
+export const useDeleteMockExamQuestion = () => {
+  return useMutation<
+    DeleteMockExamQuestionMutation,
+    DeleteMockExamQuestionFeedbackMutationVariables
+  >(DeleteMockExamQuestion_MUTATION, {
     refetchQueries: [{ query: ReadMockExam_Query }, 'ReadMockExam'],
   });
 };
@@ -43,5 +57,14 @@ export const useCreateMockExamQuestion = () => {
       { query: ReadMockExamQuestionNumbers_Query },
       'ReadMockExamQuestionNumbers',
     ],
+  });
+};
+
+export const useUpdateApprovedStateOfQuestion = () => {
+  return useMutation<
+    UpdateApprovedStateOfMockExamQuestionMutation,
+    UpdateApprovedStateOfMockExamQuestionMutationVariables
+  >(UpdateApprovedStateOfMockExamQuestion_MUTATION, {
+    refetchQueries: [{ query: ReadMockExam_Query }, 'ReadMockExam'],
   });
 };

@@ -1,27 +1,37 @@
 import { CaretUpOutlined } from '@ant-design/icons';
 import { Button, Image } from 'antd';
+import TextArea from 'antd/lib/input/TextArea';
 import React, { useState } from 'react';
-import { ReadQMockExamQuestionData } from '../../customTypes';
+import { ReadMockExamQuery } from '../../lib/grapql/query.generated';
+import MockExamQuestionApproveButton from './MockExamQuestionApproveButton';
 import MockExamQuestionDeleteButton from './MockExamQuestionDeleteButton';
+import MockExamQuestionFeedbackDeleteButton from './MockExamQuestionFeedbackDeleteButton';
 
 interface MockExamQuestionProps {
-  question: ReadQMockExamQuestionData;
+  question: ReadMockExamQuery['readMockExam']['mockExam']['mockExamQuestion'][0];
 }
 
 const MockExamQuestion: React.FC<MockExamQuestionProps> = ({ question }) => {
   const [reportListVisible, setReportListVisible] = useState(false);
+
   const onToggleReportList = () => {
     setReportListVisible((state) => !state);
   };
+
   return (
     <div className="flex flex-col border-b pb-10 " key={question.id}>
       <div className="flex gap-4 items-center mt-10">
         <Button className="w-20">수정</Button>
-        <Button className="w-20">삭제</Button>
-        <Button className="w-20">승인</Button>
+        <MockExamQuestionDeleteButton questionId={question.id} />
+        <MockExamQuestionApproveButton
+          questionId={question.id}
+          disabled={question.approved}
+        />
       </div>
-      <div className="flex mt-6 flex-col gap-8">
-        <p>문제1. {question.question}</p>
+      <div className="flex mt-6 flex-col gap-3">
+        <p>
+          문제{question.number}. {question.question}
+        </p>
         <div className="flex gap-4 ">
           {question.question_img &&
             question.question_img?.length >= 1 &&
@@ -35,7 +45,8 @@ const MockExamQuestion: React.FC<MockExamQuestionProps> = ({ question }) => {
               />
             ))}
         </div>
-        <p>에시답안: {question.solution}</p>
+        <span>정답</span>
+        <pre>{question.solution}</pre>
         <div className="flex gap-4 ">
           {question.solution_img &&
             question.solution_img?.length >= 1 &&
@@ -59,7 +70,7 @@ const MockExamQuestion: React.FC<MockExamQuestionProps> = ({ question }) => {
         {reportListVisible && (
           <ul className="flex gap-4 flex-col border-solid border p-4 mt-4">
             {question.mockExamQuestionFeedback.map((feedBack) => (
-              <MockExamQuestionDeleteButton
+              <MockExamQuestionFeedbackDeleteButton
                 feedBack={feedBack}
                 key={feedBack.id}
               />

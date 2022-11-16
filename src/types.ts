@@ -251,6 +251,7 @@ export type Mutation = {
   login: LoginOutput;
   readMockExamQuestionsByState: ReadMockExamQuestionsByStateOutput;
   register: RegisterOutput;
+  updateApprovedStateOfMockExamQuestion: UpdateApprovedStateOfMockExamQuestionOutput;
 };
 
 
@@ -331,6 +332,11 @@ export type MutationReadMockExamQuestionsByStateArgs = {
 
 export type MutationRegisterArgs = {
   input: RegisterInput;
+};
+
+
+export type MutationUpdateApprovedStateOfMockExamQuestionArgs = {
+  input: UpdateApprovedStateOfMockExamQuestionInput;
 };
 
 export type Query = {
@@ -468,6 +474,18 @@ export type SearchMockExamOutput = {
   mockExams: Array<MockExam>;
   ok: Scalars['Boolean'];
   totalResults: Scalars['Float'];
+};
+
+export type UpdateApprovedStateOfMockExamQuestionInput = {
+  questionId: Scalars['Float'];
+};
+
+export type UpdateApprovedStateOfMockExamQuestionOutput = {
+  __typename?: 'UpdateApprovedStateOfMockExamQuestionOutput';
+  currentApprovedState: Scalars['Boolean'];
+  error?: Maybe<Scalars['String']>;
+  ok: Scalars['Boolean'];
+  questionId: Scalars['Float'];
 };
 
 export type User = {

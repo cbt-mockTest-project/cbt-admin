@@ -9,13 +9,7 @@ interface UploadImageProps {
 }
 
 const UploadImages: React.FC<UploadImageProps> = ({ onFileChange }) => {
-  const [fileList, setFileList] = useState<UploadFile[]>([
-    {
-      uid: '-1',
-      name: 'image.png',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
-  ]);
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
   useEffect(() => {
     if (onFileChange) {
       onFileChange(fileList);

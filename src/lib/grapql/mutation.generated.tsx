@@ -17,6 +17,20 @@ export type DeleteMockExamQuestionFeedbackMutationVariables = Types.Exact<{
 
 export type DeleteMockExamQuestionFeedbackMutation = { __typename?: 'Mutation', deleteMockExamQuestionFeedback: { __typename?: 'DeleteMockExamQuestionFeedbackOutput', error?: string | null, ok: boolean } };
 
+export type UpdateApprovedStateOfMockExamQuestionMutationVariables = Types.Exact<{
+  input: Types.UpdateApprovedStateOfMockExamQuestionInput;
+}>;
+
+
+export type UpdateApprovedStateOfMockExamQuestionMutation = { __typename?: 'Mutation', updateApprovedStateOfMockExamQuestion: { __typename?: 'UpdateApprovedStateOfMockExamQuestionOutput', ok: boolean, error?: string | null, currentApprovedState: boolean, questionId: number } };
+
+export type DeleteMockExamQuestionMutationVariables = Types.Exact<{
+  input: Types.DeleteMockExamQuestionInput;
+}>;
+
+
+export type DeleteMockExamQuestionMutation = { __typename?: 'Mutation', deleteMockExamQuestion: { __typename?: 'DeleteMockExamQuestionOutput', error?: string | null, ok: boolean } };
+
 export type LoginMutationVariables = Types.Exact<{
   input: Types.LoginInput;
 }>;
@@ -55,6 +69,32 @@ export const DeleteMockExamQuestionFeedbackDocument = gql`
 
 export function useDeleteMockExamQuestionFeedbackMutation() {
   return Urql.useMutation<DeleteMockExamQuestionFeedbackMutation, DeleteMockExamQuestionFeedbackMutationVariables>(DeleteMockExamQuestionFeedbackDocument);
+};
+export const UpdateApprovedStateOfMockExamQuestionDocument = gql`
+    mutation UpdateApprovedStateOfMockExamQuestion($input: UpdateApprovedStateOfMockExamQuestionInput!) {
+  updateApprovedStateOfMockExamQuestion(input: $input) {
+    ok
+    error
+    currentApprovedState
+    questionId
+  }
+}
+    `;
+
+export function useUpdateApprovedStateOfMockExamQuestionMutation() {
+  return Urql.useMutation<UpdateApprovedStateOfMockExamQuestionMutation, UpdateApprovedStateOfMockExamQuestionMutationVariables>(UpdateApprovedStateOfMockExamQuestionDocument);
+};
+export const DeleteMockExamQuestionDocument = gql`
+    mutation DeleteMockExamQuestion($input: DeleteMockExamQuestionInput!) {
+  deleteMockExamQuestion(input: $input) {
+    error
+    ok
+  }
+}
+    `;
+
+export function useDeleteMockExamQuestionMutation() {
+  return Urql.useMutation<DeleteMockExamQuestionMutation, DeleteMockExamQuestionMutationVariables>(DeleteMockExamQuestionDocument);
 };
 export const LoginDocument = gql`
     mutation Login($input: LoginInput!) {

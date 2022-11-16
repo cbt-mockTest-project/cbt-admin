@@ -16,5 +16,6 @@ export const FULL_QUESTION_FRAGMENT = gql`
       id
     }
     number
+    approved
   }
 `;

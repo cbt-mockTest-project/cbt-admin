@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export const CreateMockExam_Mutation = gql`
+export const CreateMockExam_MUTATION = gql`
   mutation CreateMockExam($input: CreateMockExamInput!) {
     createMockExam(input: $input) {
       error
@@ -9,11 +9,33 @@ export const CreateMockExam_Mutation = gql`
   }
 `;
 
-export const Delet_Mock_Exam_Question_Feedback_Mutation = gql`
+export const DeleteMockExamQuestionFeedback_MUTATION = gql`
   mutation DeleteMockExamQuestionFeedback(
     $input: DeleteMockExamQuestionFeedbackInput!
   ) {
     deleteMockExamQuestionFeedback(input: $input) {
+      error
+      ok
+    }
+  }
+`;
+
+export const UpdateApprovedStateOfMockExamQuestion_MUTATION = gql`
+  mutation UpdateApprovedStateOfMockExamQuestion(
+    $input: UpdateApprovedStateOfMockExamQuestionInput!
+  ) {
+    updateApprovedStateOfMockExamQuestion(input: $input) {
+      ok
+      error
+      currentApprovedState
+      questionId
+    }
+  }
+`;
+
+export const DeleteMockExamQuestion_MUTATION = gql`
+  mutation DeleteMockExamQuestion($input: DeleteMockExamQuestionInput!) {
+    deleteMockExamQuestion(input: $input) {
       error
       ok
     }
