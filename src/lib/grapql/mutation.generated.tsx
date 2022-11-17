@@ -45,6 +45,13 @@ export type CreateMockExamQuestionMutationVariables = Types.Exact<{
 
 export type CreateMockExamQuestionMutation = { __typename?: 'Mutation', createMockExamQuestion: { __typename?: 'CreateMockExamQuestionOutput', ok: boolean, error?: string | null } };
 
+export type EditMockExamQuestionMutationVariables = Types.Exact<{
+  input: Types.EditMockExamQuestionInput;
+}>;
+
+
+export type EditMockExamQuestionMutation = { __typename?: 'Mutation', editMockExamQuestion: { __typename?: 'EditMockExamQuestionOutput', ok: boolean, error?: string | null } };
+
 
 export const CreateMockExamDocument = gql`
     mutation CreateMockExam($input: CreateMockExamInput!) {
@@ -120,4 +127,16 @@ export const CreateMockExamQuestionDocument = gql`
 
 export function useCreateMockExamQuestionMutation() {
   return Urql.useMutation<CreateMockExamQuestionMutation, CreateMockExamQuestionMutationVariables>(CreateMockExamQuestionDocument);
+};
+export const EditMockExamQuestionDocument = gql`
+    mutation EditMockExamQuestion($input: EditMockExamQuestionInput!) {
+  editMockExamQuestion(input: $input) {
+    ok
+    error
+  }
+}
+    `;
+
+export function useEditMockExamQuestionMutation() {
+  return Urql.useMutation<EditMockExamQuestionMutation, EditMockExamQuestionMutationVariables>(EditMockExamQuestionDocument);
 };

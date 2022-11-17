@@ -1,8 +1,10 @@
-import { useLazyQuery, useMutation } from '@apollo/client';
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
+import { useRouter } from 'next/router';
 import {
   CreateMockExamQuestion_MUTATION,
   DeleteMockExamQuestionFeedback_MUTATION,
   DeleteMockExamQuestion_MUTATION,
+  EditMockExamQuestion_MUTATION,
   UpdateApprovedStateOfMockExamQuestion_MUTATION,
 } from '../grapql/mutation';
 import {
@@ -11,16 +13,21 @@ import {
   DeleteMockExamQuestionFeedbackMutation,
   DeleteMockExamQuestionFeedbackMutationVariables,
   DeleteMockExamQuestionMutation,
+  EditMockExamQuestionMutation,
+  EditMockExamQuestionMutationVariables,
   UpdateApprovedStateOfMockExamQuestionMutation,
   UpdateApprovedStateOfMockExamQuestionMutationVariables,
 } from '../grapql/mutation.generated';
 import {
   ReadMockExamQuestionNumbers_Query,
+  ReadMockExamQuestion_Query,
   ReadMockExam_Query,
 } from '../grapql/query';
 import {
   ReadMockExamQuestionNumbersQuery,
   ReadMockExamQuestionNumbersQueryVariables,
+  ReadMockExamQuestionQuery,
+  ReadMockExamQuestionQueryVariables,
 } from '../grapql/query.generated';
 
 export const useDeleteMockExamQuestionFeedBack = () => {
@@ -48,6 +55,28 @@ export const useLazyReadMockExamQuestionNumbers = () => {
   >(ReadMockExamQuestionNumbers_Query);
 };
 
+export const useLazyReadMockExamQuestion = () => {
+  return useLazyQuery<
+    ReadMockExamQuestionQuery,
+    ReadMockExamQuestionQueryVariables
+  >(ReadMockExamQuestion_Query);
+};
+
+export const useReadMockExamQuestion = () => {
+  const router = useRouter();
+  return useQuery<
+    ReadMockExamQuestionQuery,
+    ReadMockExamQuestionQueryVariables
+  >(ReadMockExamQuestion_Query, {
+    variables: {
+      input: {
+        questionId: Number(router.query.id),
+      },
+    },
+    fetchPolicy: 'no-cache',
+  });
+};
+
 export const useCreateMockExamQuestion = () => {
   return useMutation<
     CreateMockExamQuestionMutation,
@@ -67,4 +96,11 @@ export const useUpdateApprovedStateOfQuestion = () => {
   >(UpdateApprovedStateOfMockExamQuestion_MUTATION, {
     refetchQueries: [{ query: ReadMockExam_Query }, 'ReadMockExam'],
   });
+};
+
+export const useEditMockExamQuestion = () => {
+  return useMutation<
+    EditMockExamQuestionMutation,
+    EditMockExamQuestionMutationVariables
+  >(EditMockExamQuestion_MUTATION);
 };

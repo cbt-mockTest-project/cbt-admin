@@ -6,10 +6,14 @@ import { UploadRequestOption } from '../../customTypes';
 
 interface UploadImageProps {
   onFileChange?: (fileList: UploadFile[]) => void;
+  defaultValues?: UploadFile[];
 }
 
-const UploadImages: React.FC<UploadImageProps> = ({ onFileChange }) => {
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
+const UploadImages: React.FC<UploadImageProps> = ({
+  onFileChange,
+  defaultValues,
+}) => {
+  const [fileList, setFileList] = useState<UploadFile[]>(defaultValues || []);
   useEffect(() => {
     if (onFileChange) {
       onFileChange(fileList);

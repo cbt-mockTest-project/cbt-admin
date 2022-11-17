@@ -60,3 +60,12 @@ export const CreateMockExamQuestion_MUTATION = gql`
     }
   }
 `;
+
+export const EditMockExamQuestion_MUTATION = gql`
+  mutation EditMockExamQuestion($input: EditMockExamQuestionInput!) {
+    editMockExamQuestion(input: $input) {
+      ok
+      error
+    }
+  }
+`

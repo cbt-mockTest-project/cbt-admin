@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import React, { useEffect } from 'react';
+import React from 'react';
 import Layout from '../../src/components/layout/Layout';
 import MockExamQuestion from '../../src/components/mockExamQuestion/MockExamQuestion';
 import { useReadMockExam } from '../../src/lib/hooks/useMockExams';

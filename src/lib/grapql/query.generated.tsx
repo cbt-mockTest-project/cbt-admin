@@ -23,6 +23,13 @@ export type SearchMockExamQueryVariables = Types.Exact<{
 
 export type SearchMockExamQuery = { __typename?: 'Query', searchMockExam: { __typename?: 'SearchMockExamOutput', mockExams: Array<{ __typename?: 'MockExam', id: number, title: string }> } };
 
+export type ReadMockExamQuestionQueryVariables = Types.Exact<{
+  input: Types.ReadMockExamQuestionInput;
+}>;
+
+
+export type ReadMockExamQuestionQuery = { __typename?: 'Query', readMockExamQuestion: { __typename?: 'ReadMockExamQuestionOutput', mockExamQusetion: { __typename?: 'MockExamQuestion', id: number, question: string, solution: string, number: number, question_img?: Array<{ __typename?: 'MockExamImageType', url: string, name: string, uid: string }> | null, solution_img?: Array<{ __typename?: 'MockExamImageType', name: string, uid: string, url: string }> | null, mockExam: { __typename?: 'MockExam', title: string } } } };
+
 export type ReadMockExamQueryVariables = Types.Exact<{
   input: Types.ReadMockExamInput;
 }>;
@@ -83,6 +90,35 @@ export const SearchMockExamDocument = gql`
 
 export function useSearchMockExamQuery(options: Omit<Urql.UseQueryArgs<SearchMockExamQueryVariables>, 'query'>) {
   return Urql.useQuery<SearchMockExamQuery, SearchMockExamQueryVariables>({ query: SearchMockExamDocument, ...options });
+};
+export const ReadMockExamQuestionDocument = gql`
+    query ReadMockExamQuestion($input: ReadMockExamQuestionInput!) {
+  readMockExamQuestion(input: $input) {
+    mockExamQusetion {
+      id
+      question
+      question_img {
+        url
+        name
+        uid
+      }
+      solution
+      solution_img {
+        name
+        uid
+        url
+      }
+      number
+      mockExam {
+        title
+      }
+    }
+  }
+}
+    `;
+
+export function useReadMockExamQuestionQuery(options: Omit<Urql.UseQueryArgs<ReadMockExamQuestionQueryVariables>, 'query'>) {
+  return Urql.useQuery<ReadMockExamQuestionQuery, ReadMockExamQuestionQueryVariables>({ query: ReadMockExamQuestionDocument, ...options });
 };
 export const ReadMockExamDocument = gql`
     query ReadMockExam($input: ReadMockExamInput!) {

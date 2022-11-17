@@ -33,6 +33,32 @@ export const SearchMockExam_QUERY = gql`
   }
 `;
 
+export const ReadMockExamQuestion_Query = gql`
+  query ReadMockExamQuestion($input: ReadMockExamQuestionInput!) {
+    readMockExamQuestion(input: $input) {
+      mockExamQusetion {
+        id
+        question
+        question_img {
+          url
+          name
+          uid
+        }
+        solution
+        solution_img {
+          name
+          uid
+          url
+        }
+        number
+        mockExam {
+          title
+        }
+      }
+    }
+  }
+`;
+
 export const ReadMockExam_Query = gql`
   query ReadMockExam($input: ReadMockExamInput!) {
     readMockExam(input: $input) {

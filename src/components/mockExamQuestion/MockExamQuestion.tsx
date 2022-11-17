@@ -1,6 +1,6 @@
 import { CaretUpOutlined } from '@ant-design/icons';
-import { Button, Image } from 'antd';
-import TextArea from 'antd/lib/input/TextArea';
+import { Button } from 'antd';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { ReadMockExamQuery } from '../../lib/grapql/query.generated';
 import MockExamQuestionApproveButton from './MockExamQuestionApproveButton';
@@ -13,15 +13,17 @@ interface MockExamQuestionProps {
 
 const MockExamQuestion: React.FC<MockExamQuestionProps> = ({ question }) => {
   const [reportListVisible, setReportListVisible] = useState(false);
-
+  const router = useRouter();
   const onToggleReportList = () => {
     setReportListVisible((state) => !state);
   };
-
+  const gotoEditPage = () => router.push(`/mockExams/edit/${question.id}`);
   return (
     <div className="flex flex-col border-b pb-10 " key={question.id}>
       <div className="flex gap-4 items-center mt-10">
-        <Button className="w-20">수정</Button>
+        <Button className="w-20" onClick={gotoEditPage}>
+          수정
+        </Button>
         <MockExamQuestionDeleteButton questionId={question.id} />
         <MockExamQuestionApproveButton
           questionId={question.id}
@@ -35,14 +37,15 @@ const MockExamQuestion: React.FC<MockExamQuestionProps> = ({ question }) => {
         <div className="flex gap-4 ">
           {question.question_img &&
             question.question_img?.length >= 1 &&
-            question.question_img.map((image) => (
-              <Image
+            question.question_img.map((image, index) => (
+              <a
+                href={image.url}
                 key={image.url}
-                src={image.url}
-                width="300px"
-                height="300px"
-                alt="qusetionImage"
-              />
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {`문제이미지${String(index + 1).padStart(2, '0')}`}
+              </a>
             ))}
         </div>
         <span>정답</span>
@@ -50,14 +53,15 @@ const MockExamQuestion: React.FC<MockExamQuestionProps> = ({ question }) => {
         <div className="flex gap-4 ">
           {question.solution_img &&
             question.solution_img?.length >= 1 &&
-            question.solution_img.map((image) => (
-              <Image
+            question.solution_img.map((image, index) => (
+              <a
+                href={image.url}
                 key={image.url}
-                src={image.url}
-                width="300px"
-                height="300px"
-                alt="qusetionImage"
-              />
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {`정답이미지${String(index + 1).padStart(2, '0')}`}
+              </a>
             ))}
         </div>
         <div
