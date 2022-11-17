@@ -1,6 +1,6 @@
 import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
-import { CreateMockExam_Mutation } from '../grapql/mutation';
+import { CreateMockExam_MUTATION } from '../grapql/mutation';
 import {
   CreateMockExamMutation,
   CreateMockExamMutationVariables,
@@ -39,13 +39,17 @@ export const useReadMockExam = () => {
           id: Number(router.query.id) || 0,
         },
       },
+      fetchPolicy: 'no-cache',
     }
   );
 };
 
 export const useLazyReadMockExam = () => {
   return useLazyQuery<ReadMockExamQuery, ReadMockExamQueryVariables>(
-    ReadMockExam_Query
+    ReadMockExam_Query,
+    {
+      fetchPolicy: 'cache-and-network',
+    }
   );
 };
 
@@ -77,7 +81,7 @@ export const useSearchMockExams = () =>
 
 export const useCreateMockExam = () => {
   return useMutation<CreateMockExamMutation, CreateMockExamMutationVariables>(
-    CreateMockExam_Mutation,
+    CreateMockExam_MUTATION,
     {
       refetchQueries: [{ query: ReadAllMockExam_QUERY }, 'ReadAllMockExam'],
     }

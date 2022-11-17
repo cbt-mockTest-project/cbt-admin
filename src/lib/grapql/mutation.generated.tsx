@@ -17,6 +17,20 @@ export type DeleteMockExamQuestionFeedbackMutationVariables = Types.Exact<{
 
 export type DeleteMockExamQuestionFeedbackMutation = { __typename?: 'Mutation', deleteMockExamQuestionFeedback: { __typename?: 'DeleteMockExamQuestionFeedbackOutput', error?: string | null, ok: boolean } };
 
+export type UpdateApprovedStateOfMockExamQuestionMutationVariables = Types.Exact<{
+  input: Types.UpdateApprovedStateOfMockExamQuestionInput;
+}>;
+
+
+export type UpdateApprovedStateOfMockExamQuestionMutation = { __typename?: 'Mutation', updateApprovedStateOfMockExamQuestion: { __typename?: 'UpdateApprovedStateOfMockExamQuestionOutput', ok: boolean, error?: string | null, currentApprovedState: boolean, questionId: number } };
+
+export type DeleteMockExamQuestionMutationVariables = Types.Exact<{
+  input: Types.DeleteMockExamQuestionInput;
+}>;
+
+
+export type DeleteMockExamQuestionMutation = { __typename?: 'Mutation', deleteMockExamQuestion: { __typename?: 'DeleteMockExamQuestionOutput', error?: string | null, ok: boolean } };
+
 export type LoginMutationVariables = Types.Exact<{
   input: Types.LoginInput;
 }>;
@@ -30,6 +44,13 @@ export type CreateMockExamQuestionMutationVariables = Types.Exact<{
 
 
 export type CreateMockExamQuestionMutation = { __typename?: 'Mutation', createMockExamQuestion: { __typename?: 'CreateMockExamQuestionOutput', ok: boolean, error?: string | null } };
+
+export type EditMockExamQuestionMutationVariables = Types.Exact<{
+  input: Types.EditMockExamQuestionInput;
+}>;
+
+
+export type EditMockExamQuestionMutation = { __typename?: 'Mutation', editMockExamQuestion: { __typename?: 'EditMockExamQuestionOutput', ok: boolean, error?: string | null } };
 
 
 export const CreateMockExamDocument = gql`
@@ -56,6 +77,32 @@ export const DeleteMockExamQuestionFeedbackDocument = gql`
 export function useDeleteMockExamQuestionFeedbackMutation() {
   return Urql.useMutation<DeleteMockExamQuestionFeedbackMutation, DeleteMockExamQuestionFeedbackMutationVariables>(DeleteMockExamQuestionFeedbackDocument);
 };
+export const UpdateApprovedStateOfMockExamQuestionDocument = gql`
+    mutation UpdateApprovedStateOfMockExamQuestion($input: UpdateApprovedStateOfMockExamQuestionInput!) {
+  updateApprovedStateOfMockExamQuestion(input: $input) {
+    ok
+    error
+    currentApprovedState
+    questionId
+  }
+}
+    `;
+
+export function useUpdateApprovedStateOfMockExamQuestionMutation() {
+  return Urql.useMutation<UpdateApprovedStateOfMockExamQuestionMutation, UpdateApprovedStateOfMockExamQuestionMutationVariables>(UpdateApprovedStateOfMockExamQuestionDocument);
+};
+export const DeleteMockExamQuestionDocument = gql`
+    mutation DeleteMockExamQuestion($input: DeleteMockExamQuestionInput!) {
+  deleteMockExamQuestion(input: $input) {
+    error
+    ok
+  }
+}
+    `;
+
+export function useDeleteMockExamQuestionMutation() {
+  return Urql.useMutation<DeleteMockExamQuestionMutation, DeleteMockExamQuestionMutationVariables>(DeleteMockExamQuestionDocument);
+};
 export const LoginDocument = gql`
     mutation Login($input: LoginInput!) {
   login(input: $input) {
@@ -80,4 +127,16 @@ export const CreateMockExamQuestionDocument = gql`
 
 export function useCreateMockExamQuestionMutation() {
   return Urql.useMutation<CreateMockExamQuestionMutation, CreateMockExamQuestionMutationVariables>(CreateMockExamQuestionDocument);
+};
+export const EditMockExamQuestionDocument = gql`
+    mutation EditMockExamQuestion($input: EditMockExamQuestionInput!) {
+  editMockExamQuestion(input: $input) {
+    ok
+    error
+  }
+}
+    `;
+
+export function useEditMockExamQuestionMutation() {
+  return Urql.useMutation<EditMockExamQuestionMutation, EditMockExamQuestionMutationVariables>(EditMockExamQuestionDocument);
 };

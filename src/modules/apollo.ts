@@ -9,7 +9,6 @@ import { getCookie } from 'cookies-next';
 
 const jwtToken = getCookie('jwt-token');
 export const authTokenVar = makeVar(jwtToken);
-
 const httpLink = createHttpLink({
   uri: 'http://localhost:8070/graphql',
 });

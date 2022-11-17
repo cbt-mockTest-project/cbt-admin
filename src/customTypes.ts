@@ -5,12 +5,13 @@ export interface ReadQMockExamQuestionData {
   question: string;
   solution: string;
   id: number;
+  number: number;
   question_img?: Array<{
-    __typename?: 'MockExamQuestionImage';
+    __typename?: 'MockExamImageType';
     url: string;
   }> | null;
   solution_img?: Array<{
-    __typename?: 'MockExamQuestionImage';
+    __typename?: 'MockExamImageType';
     url: string;
   }> | null;
   mockExamQuestionFeedback: Array<{
