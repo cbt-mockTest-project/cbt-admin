@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { SetStateAction, useEffect } from 'react';
 import { UploadFile } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -10,13 +10,17 @@ import { EditMockExamQuestionInput } from '../../types';
 interface QuestionAndSolutionProps {
   type?: 'edit' | 'write';
   prevData?: Omit<EditMockExamQuestionInput, 'id'>;
+  submitState?: boolean;
+  setSubmitState?: React.Dispatch<SetStateAction<boolean>>;
 }
 
 const QuestionAndSolution: React.FC<QuestionAndSolutionProps> = ({
   type = 'write',
   prevData,
+  submitState,
+  setSubmitState,
 }) => {
-  const { control, setValue, formState } = useFormContext();
+  const { control, setValue, formState, getValues } = useFormContext();
   let question = '';
   let solution = '';
   let question_img: UploadFile[] = [];
@@ -41,6 +45,13 @@ const QuestionAndSolution: React.FC<QuestionAndSolutionProps> = ({
       setValue('solution_img', solution_img);
     }
   }, []);
+  useEffect(() => {
+    if (submitState) {
+      onQuestionImageChange([]);
+      onSolutionImageChange([]);
+      setSubmitState && setSubmitState(false);
+    }
+  }, [submitState]);
 
   const onQuestionImageChange = (questionImages: UploadFile[]) => {
     setValue('question_img', questionImages);

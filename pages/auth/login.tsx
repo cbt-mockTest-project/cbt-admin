@@ -6,7 +6,6 @@ import { Controller, useForm } from 'react-hook-form';
 import ErrorText from '../../src/components/common/ErrorText';
 import Layout from '../../src/components/layout/Layout';
 import { useLogin } from '../../src/lib/hooks/useAuth';
-import { authTokenVar } from '../../src/modules/apollo';
 
 interface LoginForm {
   email: string;
@@ -14,7 +13,6 @@ interface LoginForm {
 }
 
 const Login: NextPage = () => {
-  const router = useRouter();
   const { handleSubmit, control, formState } = useForm<LoginForm>();
   const [loginMutation, { data: loginMutationData }] = useLogin();
   const onSubmit = (data: LoginForm) => {
@@ -24,9 +22,7 @@ const Login: NextPage = () => {
       },
     });
   };
-  useEffect(() => {
-    if (authTokenVar()) router.push('/');
-  }, [authTokenVar()]);
+
 
   return (
     <Layout>

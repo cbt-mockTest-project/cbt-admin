@@ -18,12 +18,19 @@ export type OptionType = {
   value: string | object;
 };
 
-const ExamSelect: React.FC = () => {
+export interface ExamSelectInterface {
+  number: number;
+  onChangeNumber: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+const ExamSelect: React.FC<ExamSelectInterface> = ({
+  number,
+  onChangeNumber,
+}) => {
   const { setValue } = useFormContext();
   const { data: allCategories } = useReadAllMockExamCategory();
   const [mockExams, setMockExams] = useState<SearchOptionType[]>([]);
   const [readMockExamsByCategory] = useReadAllMockExamsByCategory();
-  const { value: number, onChange: onChangeNumber } = useInput();
   const [getQuestionNumbers, { data: ReadMockExamQuestionNumbersData }] =
     useLazyReadMockExamQuestionNumbers();
   const questionNumbers =
@@ -31,7 +38,7 @@ const ExamSelect: React.FC = () => {
       .questionNumbers;
   useEffect(() => {
     if (number) {
-      setValue('number', Number(number));
+      setValue('number', number);
     }
   }, [number]);
   if (!allCategories) return null;
@@ -92,7 +99,12 @@ const ExamSelect: React.FC = () => {
       </div>
       <div className="flex gap-4 items-center">
         <div>문제번호</div>
-        <Input className="w-52" type="number" onChange={onChangeNumber} />
+        <Input
+          className="w-52"
+          type="number"
+          onChange={onChangeNumber}
+          value={number}
+        />
       </div>
       <div className="flex gap-4 items-center">
         <div>등록된 문제</div>

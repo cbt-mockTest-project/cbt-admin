@@ -4,18 +4,15 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useMe } from '../../lib/hooks/useAuth';
 import { authRoutes } from '../../lib/routes';
-import { authTokenVar } from '../../modules/apollo';
 import ClientOnly from '../common/ClientOnly';
 
 const Nav = () => {
   const router = useRouter();
-  const { refetch } = useMe();
+  const { data: meQuery } = useMe();
   const isRoot = router.pathname === '/';
   const isManage = router.pathname === '/manage';
   const onLogout = () => {
-    authTokenVar('');
     deleteCookie('jwt-token');
-    refetch();
   };
   return (
     <nav className="w-full border-b border-solid border-slate-200 flex justify-center py-6">
@@ -41,7 +38,7 @@ const Nav = () => {
           </Link>
         </div>
         <ClientOnly>
-          {authTokenVar() ? (
+          {meQuery?.me.user ? (
             <span
               onClick={onLogout}
               className="cursor-pointer hover:text-cyan-500 transition-colors"

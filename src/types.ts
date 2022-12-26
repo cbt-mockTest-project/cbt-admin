@@ -13,6 +13,33 @@ export type Scalars = {
   DateTime: any;
 };
 
+export type ChangePasswordAfterVerifyingInput = {
+  code: Scalars['String'];
+  password: Scalars['String'];
+};
+
+export type ChangePasswordAfterVerifyingOutput = {
+  __typename?: 'ChangePasswordAfterVerifyingOutput';
+  error?: Maybe<Scalars['String']>;
+  ok: Scalars['Boolean'];
+};
+
+export type CheckPasswordInput = {
+  password: Scalars['String'];
+};
+
+export type CheckPasswordOutput = {
+  __typename?: 'CheckPasswordOutput';
+  error?: Maybe<Scalars['String']>;
+  ok: Scalars['Boolean'];
+};
+
+export type CoreOutput = {
+  __typename?: 'CoreOutput';
+  error?: Maybe<Scalars['String']>;
+  ok: Scalars['Boolean'];
+};
+
 export type CreateMockExamCategoryInput = {
   name: Scalars['String'];
 };
@@ -67,6 +94,7 @@ export type CreateOrUpdateMockExamQuestionStateInput = {
 
 export type CreateOrUpdateMockExamQuestionStateOutput = {
   __typename?: 'CreateOrUpdateMockExamQuestionStateOutput';
+  currentState?: Maybe<QuestionState>;
   error?: Maybe<Scalars['String']>;
   message?: Maybe<Scalars['String']>;
   ok: Scalars['Boolean'];
@@ -153,6 +181,54 @@ export type EditMockExamQuestionOutput = {
   ok: Scalars['Boolean'];
 };
 
+export type EditProfileInput = {
+  nickname?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+};
+
+export type EditProfileOutput = {
+  __typename?: 'EditProfileOutput';
+  error?: Maybe<Scalars['String']>;
+  ok: Scalars['Boolean'];
+};
+
+export type EmailVerificationInput = {
+  code: Scalars['String'];
+};
+
+export type EmailVerificationOutput = {
+  __typename?: 'EmailVerificationOutput';
+  email: Scalars['String'];
+  error?: Maybe<Scalars['String']>;
+  ok: Scalars['Boolean'];
+};
+
+export type ExamTitleAndId = {
+  __typename?: 'ExamTitleAndId';
+  id: Scalars['Float'];
+  title: Scalars['String'];
+};
+
+export type Feedback = {
+  __typename?: 'Feedback';
+  content: Scalars['String'];
+  created_at: Scalars['DateTime'];
+  id: Scalars['Float'];
+  updated_at: Scalars['DateTime'];
+  user: User;
+};
+
+export type FindMyExamHistoryInput = {
+  categoryIds: Array<Scalars['Float']>;
+};
+
+export type FindMyExamHistoryOutput = {
+  __typename?: 'FindMyExamHistoryOutput';
+  error?: Maybe<Scalars['String']>;
+  ok: Scalars['Boolean'];
+  titleAndId?: Maybe<Array<TitleAndId>>;
+};
+
 export type LoginInput = {
   email: Scalars['String'];
   password: Scalars['String'];
@@ -165,6 +241,13 @@ export type LoginOutput = {
   token?: Maybe<Scalars['String']>;
 };
 
+export type MeOutput = {
+  __typename?: 'MeOutput';
+  error?: Maybe<Scalars['String']>;
+  ok: Scalars['Boolean'];
+  user?: Maybe<User>;
+};
+
 export type MockExam = {
   __typename?: 'MockExam';
   approved: Scalars['Boolean'];
@@ -172,6 +255,7 @@ export type MockExam = {
   id: Scalars['Float'];
   mockExamCategory: MockExamCategory;
   mockExamQuestion: Array<MockExamQuestion>;
+  mockExamQuestionState: Array<MockExamQuestion>;
   title: Scalars['String'];
   updated_at: Scalars['DateTime'];
 };
@@ -215,6 +299,7 @@ export type MockExamQuestionFeedback = {
   id: Scalars['Float'];
   mockExamQuestion: MockExamQuestion;
   updated_at: Scalars['DateTime'];
+  user: User;
 };
 
 export type MockExamQuestionImageInputType = {
@@ -225,9 +310,11 @@ export type MockExamQuestionImageInputType = {
 
 export type MockExamQuestionState = {
   __typename?: 'MockExamQuestionState';
+  answer: Scalars['String'];
   created_at: Scalars['DateTime'];
+  exam: MockExam;
   id: Scalars['Float'];
-  mockExamQuestion: MockExamQuestion;
+  question: MockExamQuestion;
   state: QuestionState;
   updated_at: Scalars['DateTime'];
   user: User;
@@ -235,6 +322,8 @@ export type MockExamQuestionState = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  changePasswordAfterVerifying: ChangePasswordAfterVerifyingOutput;
+  checkPassword: CheckPasswordOutput;
   createMockExam: CreateMockExamOutput;
   createMockExamCategory: CreateMockExamCategoryOutput;
   createMockExamQuestion: CreateMockExamQuestionOutput;
@@ -244,14 +333,31 @@ export type Mutation = {
   deleteMockExamCategory: DeleteMockExamCategoryOutput;
   deleteMockExamQuestion: DeleteMockExamQuestionOutput;
   deleteMockExamQuestionFeedback: DeleteMockExamQuestionFeedbackOutput;
+  deleteUser: CoreOutput;
   editMockExam: EditMockExamOutput;
   editMockExamCategory: DeleteMockExamCategoryOutput;
   editMockExamQuestion: EditMockExamQuestionOutput;
   editMockExamQuestionFeedback: EditMockExamQuestionFeedbackOutput;
+  editProfile: EditProfileOutput;
+  emailVerification: EmailVerificationOutput;
   login: LoginOutput;
-  readMockExamQuestionsByState: ReadMockExamQuestionsByStateOutput;
+  logout: CoreOutput;
   register: RegisterOutput;
+  resetMyExamQuestionState: ResetMyExamQuestionStateOutput;
+  restoreUser: CoreOutput;
+  sendFindPasswordMail: SendFindPasswordMailOutput;
+  sendVerificationMail: SendVerificationMailOutput;
   updateApprovedStateOfMockExamQuestion: UpdateApprovedStateOfMockExamQuestionOutput;
+};
+
+
+export type MutationChangePasswordAfterVerifyingArgs = {
+  input: ChangePasswordAfterVerifyingInput;
+};
+
+
+export type MutationCheckPasswordArgs = {
+  input: CheckPasswordInput;
 };
 
 
@@ -320,18 +426,43 @@ export type MutationEditMockExamQuestionFeedbackArgs = {
 };
 
 
+export type MutationEditProfileArgs = {
+  input: EditProfileInput;
+};
+
+
+export type MutationEmailVerificationArgs = {
+  input: EmailVerificationInput;
+};
+
+
 export type MutationLoginArgs = {
   input: LoginInput;
 };
 
 
-export type MutationReadMockExamQuestionsByStateArgs = {
-  input: ReadMockExamQuestionsByStateInput;
+export type MutationRegisterArgs = {
+  input: RegisterInput;
 };
 
 
-export type MutationRegisterArgs = {
-  input: RegisterInput;
+export type MutationResetMyExamQuestionStateArgs = {
+  input: ResetMyExamQuestionStateInput;
+};
+
+
+export type MutationRestoreUserArgs = {
+  input: RestoreUserInput;
+};
+
+
+export type MutationSendFindPasswordMailArgs = {
+  input: SendFindPasswordMailInput;
+};
+
+
+export type MutationSendVerificationMailArgs = {
+  input: SendVerificationMailInput;
 };
 
 
@@ -341,7 +472,8 @@ export type MutationUpdateApprovedStateOfMockExamQuestionArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  me: User;
+  findMyExamHistory: FindMyExamHistoryOutput;
+  me: MeOutput;
   readAllMockExam: ReadAllMockExamsOutput;
   readAllMockExamCategories: ReadAllMockExamCategoriesOutput;
   readAllMockExamQuestion: ReadAllMockExamQuestionOutput;
@@ -349,8 +481,16 @@ export type Query = {
   readMockExam: ReadMockExamOutput;
   readMockExamQuestion: ReadMockExamQuestionOutput;
   readMockExamQuestionNumbers: ReadMockExamQuestionNumbersOutput;
+  readMockExamQuestionsByMockExamId: ReadMockExamQuestionsByMockExamIdOutput;
+  readMockExamQuestionsByState: ReadMockExamQuestionsByStateOutput;
+  readMockExamTitlesByCateory: ReadMockExamTitlesByCateoryOutput;
   searchMockExam: SearchMockExamOutput;
   userProfile: UserProfileOutput;
+};
+
+
+export type QueryFindMyExamHistoryArgs = {
+  input: FindMyExamHistoryInput;
 };
 
 
@@ -371,6 +511,21 @@ export type QueryReadMockExamQuestionArgs = {
 
 export type QueryReadMockExamQuestionNumbersArgs = {
   input: ReadMockExamQuestionNumbersInput;
+};
+
+
+export type QueryReadMockExamQuestionsByMockExamIdArgs = {
+  input: ReadMockExamQuestionsByMockExamIdInput;
+};
+
+
+export type QueryReadMockExamQuestionsByStateArgs = {
+  input: ReadMockExamQuestionsByStateInput;
+};
+
+
+export type QueryReadMockExamTitlesByCateoryArgs = {
+  input: ReadMockExamTitlesByCateoryInput;
 };
 
 
@@ -436,6 +591,7 @@ export type ReadMockExamOutput = {
 };
 
 export type ReadMockExamQuestionInput = {
+  examId: Scalars['Float'];
   questionId: Scalars['Float'];
 };
 
@@ -455,11 +611,25 @@ export type ReadMockExamQuestionOutput = {
   error?: Maybe<Scalars['String']>;
   mockExamQusetion: MockExamQuestion;
   ok: Scalars['Boolean'];
+  state?: Maybe<QuestionState>;
+};
+
+export type ReadMockExamQuestionsByMockExamIdInput = {
+  id: Scalars['Float'];
+  isRandom?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type ReadMockExamQuestionsByMockExamIdOutput = {
+  __typename?: 'ReadMockExamQuestionsByMockExamIdOutput';
+  count: Scalars['Float'];
+  error?: Maybe<Scalars['String']>;
+  ok: Scalars['Boolean'];
+  questions: Array<MockExamQuestion>;
 };
 
 export type ReadMockExamQuestionsByStateInput = {
   examId: Scalars['Float'];
-  state: QuestionState;
+  states: Array<QuestionState>;
 };
 
 export type ReadMockExamQuestionsByStateOutput = {
@@ -469,8 +639,19 @@ export type ReadMockExamQuestionsByStateOutput = {
   ok: Scalars['Boolean'];
 };
 
+export type ReadMockExamTitlesByCateoryInput = {
+  name: Scalars['String'];
+};
+
+export type ReadMockExamTitlesByCateoryOutput = {
+  __typename?: 'ReadMockExamTitlesByCateoryOutput';
+  error?: Maybe<Scalars['String']>;
+  ok: Scalars['Boolean'];
+  titles: Array<ExamTitleAndId>;
+};
+
 export type RegisterInput = {
-  email: Scalars['String'];
+  code: Scalars['String'];
   nickname: Scalars['String'];
   password: Scalars['String'];
 };
@@ -479,6 +660,20 @@ export type RegisterOutput = {
   __typename?: 'RegisterOutput';
   error?: Maybe<Scalars['String']>;
   ok: Scalars['Boolean'];
+};
+
+export type ResetMyExamQuestionStateInput = {
+  examId: Scalars['Float'];
+};
+
+export type ResetMyExamQuestionStateOutput = {
+  __typename?: 'ResetMyExamQuestionStateOutput';
+  error?: Maybe<Scalars['String']>;
+  ok: Scalars['Boolean'];
+};
+
+export type RestoreUserInput = {
+  id: Scalars['Float'];
 };
 
 export type SearchMockExamInput = {
@@ -491,6 +686,32 @@ export type SearchMockExamOutput = {
   mockExams: Array<MockExam>;
   ok: Scalars['Boolean'];
   totalResults: Scalars['Float'];
+};
+
+export type SendFindPasswordMailInput = {
+  email: Scalars['String'];
+};
+
+export type SendFindPasswordMailOutput = {
+  __typename?: 'SendFindPasswordMailOutput';
+  error?: Maybe<Scalars['String']>;
+  ok: Scalars['Boolean'];
+};
+
+export type SendVerificationMailInput = {
+  email: Scalars['String'];
+};
+
+export type SendVerificationMailOutput = {
+  __typename?: 'SendVerificationMailOutput';
+  error?: Maybe<Scalars['String']>;
+  ok: Scalars['Boolean'];
+};
+
+export type TitleAndId = {
+  __typename?: 'TitleAndId';
+  id?: Maybe<Scalars['Float']>;
+  title?: Maybe<Scalars['String']>;
 };
 
 export type UpdateApprovedStateOfMockExamQuestionInput = {
@@ -508,11 +729,14 @@ export type UpdateApprovedStateOfMockExamQuestionOutput = {
 export type User = {
   __typename?: 'User';
   created_at: Scalars['DateTime'];
+  deletedAt: Scalars['DateTime'];
   email: Scalars['String'];
+  feedback: Array<Feedback>;
   id: Scalars['Float'];
   mockExamQuestionState: Array<MockExamQuestionState>;
   nickname: Scalars['String'];
   password: Scalars['String'];
+  questionFeedback: Array<MockExamQuestionFeedback>;
   role: UserRole;
   updated_at: Scalars['DateTime'];
 };

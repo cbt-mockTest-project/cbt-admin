@@ -43,7 +43,7 @@ const UploadImages: React.FC<UploadImageProps> = ({
       if (file) {
         form.append('file', file);
         const { data } = await axios.post(
-          'http://localhost:8070/uploads',
+          'http://localhost:80/uploads',
           form,
           config
         );

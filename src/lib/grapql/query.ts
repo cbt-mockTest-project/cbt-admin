@@ -77,8 +77,11 @@ export const ReadMockExam_Query = gql`
 export const ME_QUERY = gql`
   query Me {
     me {
-      id
-      nickname
+      ok
+      user {
+        nickname
+      }
+      error
     }
   }
 `;
