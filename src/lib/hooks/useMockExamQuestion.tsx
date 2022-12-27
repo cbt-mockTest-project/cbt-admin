@@ -71,6 +71,7 @@ export const useReadMockExamQuestion = () => {
     variables: {
       input: {
         questionId: Number(router.query.id),
+        examId: Number(router.query.e),
       },
     },
     fetchPolicy: 'no-cache',

@@ -12,12 +12,15 @@ interface MockExamQuestionProps {
 }
 
 const MockExamQuestion: React.FC<MockExamQuestionProps> = ({ question }) => {
-  const [reportListVisible, setReportListVisible] = useState(false);
+  const [reportListVisible, setReportListVisible] = useState(
+    question.mockExamQuestionFeedback.length >= 1
+  );
   const router = useRouter();
   const onToggleReportList = () => {
     setReportListVisible((state) => !state);
   };
-  const gotoEditPage = () => router.push(`/mockExams/edit/${question.id}`);
+  const gotoEditPage = () =>
+    router.push(`/mockExams/edit/${question.id}?e=${router.query.id}`);
   return (
     <div className="flex flex-col border-b pb-10 " key={question.id}>
       <div className="flex gap-4 items-center mt-10">
