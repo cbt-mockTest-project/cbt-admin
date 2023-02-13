@@ -40,6 +40,16 @@ export type CoreOutput = {
   ok: Scalars['Boolean'];
 };
 
+export type CreateFeedbackInput = {
+  content: Scalars['String'];
+};
+
+export type CreateFeedbackOutput = {
+  __typename?: 'CreateFeedbackOutput';
+  error?: Maybe<Scalars['String']>;
+  ok: Scalars['Boolean'];
+};
+
 export type CreateMockExamCategoryInput = {
   name: Scalars['String'];
 };
@@ -146,8 +156,8 @@ export type EditMockExamCategoryInput = {
 };
 
 export type EditMockExamInput = {
+  approved?: InputMaybe<Scalars['Boolean']>;
   id: Scalars['Float'];
-  title: Scalars['String'];
 };
 
 export type EditMockExamOutput = {
@@ -324,6 +334,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   changePasswordAfterVerifying: ChangePasswordAfterVerifyingOutput;
   checkPassword: CheckPasswordOutput;
+  createFeedback: CreateFeedbackOutput;
   createMockExam: CreateMockExamOutput;
   createMockExamCategory: CreateMockExamCategoryOutput;
   createMockExamQuestion: CreateMockExamQuestionOutput;
@@ -345,6 +356,7 @@ export type Mutation = {
   register: RegisterOutput;
   resetMyExamQuestionState: ResetMyExamQuestionStateOutput;
   restoreUser: CoreOutput;
+  revalidate: RevalidateOutput;
   sendFindPasswordMail: SendFindPasswordMailOutput;
   sendVerificationMail: SendVerificationMailOutput;
   updateApprovedStateOfMockExamQuestion: UpdateApprovedStateOfMockExamQuestionOutput;
@@ -358,6 +370,11 @@ export type MutationChangePasswordAfterVerifyingArgs = {
 
 export type MutationCheckPasswordArgs = {
   input: CheckPasswordInput;
+};
+
+
+export type MutationCreateFeedbackArgs = {
+  input: CreateFeedbackInput;
 };
 
 
@@ -456,6 +473,11 @@ export type MutationRestoreUserArgs = {
 };
 
 
+export type MutationRevalidateArgs = {
+  input: RevalidateInput;
+};
+
+
 export type MutationSendFindPasswordMailArgs = {
   input: SendFindPasswordMailInput;
 };
@@ -484,6 +506,7 @@ export type Query = {
   readMockExamQuestionsByMockExamId: ReadMockExamQuestionsByMockExamIdOutput;
   readMockExamQuestionsByState: ReadMockExamQuestionsByStateOutput;
   readMockExamTitlesByCateory: ReadMockExamTitlesByCateoryOutput;
+  readMyExamQuestionState: ReadMyExamQuestionStateOutput;
   searchMockExam: SearchMockExamOutput;
   userProfile: UserProfileOutput;
 };
@@ -529,6 +552,11 @@ export type QueryReadMockExamTitlesByCateoryArgs = {
 };
 
 
+export type QueryReadMyExamQuestionStateArgs = {
+  input: ReadMyExamQuestionStateInput;
+};
+
+
 export type QuerySearchMockExamArgs = {
   input: SearchMockExamInput;
 };
@@ -567,6 +595,7 @@ export type ReadAllMockExamQuestionOutput = {
 };
 
 export type ReadAllMockExamsInput = {
+  all?: InputMaybe<Scalars['Boolean']>;
   category?: InputMaybe<Scalars['String']>;
   query?: InputMaybe<Scalars['String']>;
 };
@@ -625,6 +654,7 @@ export type ReadMockExamQuestionsByMockExamIdOutput = {
   error?: Maybe<Scalars['String']>;
   ok: Scalars['Boolean'];
   questions: Array<MockExamQuestion>;
+  title: Scalars['String'];
 };
 
 export type ReadMockExamQuestionsByStateInput = {
@@ -648,6 +678,17 @@ export type ReadMockExamTitlesByCateoryOutput = {
   error?: Maybe<Scalars['String']>;
   ok: Scalars['Boolean'];
   titles: Array<ExamTitleAndId>;
+};
+
+export type ReadMyExamQuestionStateInput = {
+  questionId: Scalars['Float'];
+};
+
+export type ReadMyExamQuestionStateOutput = {
+  __typename?: 'ReadMyExamQuestionStateOutput';
+  error?: Maybe<Scalars['String']>;
+  ok: Scalars['Boolean'];
+  state: MockExamQuestionState;
 };
 
 export type RegisterInput = {
@@ -674,6 +715,16 @@ export type ResetMyExamQuestionStateOutput = {
 
 export type RestoreUserInput = {
   id: Scalars['Float'];
+};
+
+export type RevalidateInput = {
+  path: Scalars['String'];
+};
+
+export type RevalidateOutput = {
+  __typename?: 'RevalidateOutput';
+  error?: Maybe<Scalars['String']>;
+  ok: Scalars['Boolean'];
 };
 
 export type SearchMockExamInput = {

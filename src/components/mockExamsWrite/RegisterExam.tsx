@@ -1,8 +1,9 @@
-import { Button, message, Select } from 'antd';
+import { Button, Input, message, Select } from 'antd';
 import React from 'react';
 import { SearchOptionType } from '../../../pages';
 import { useCreateMockExam } from '../../lib/hooks/useMockExams';
 import useSelectChange from '../../lib/hooks/useSelectChange';
+import useInput from '../../lib/hooks/useInput';
 import { generateArrayForSelect } from '../../lib/utils/generateArrayForSelect';
 import { OptionType } from './ExamSelect';
 
@@ -12,6 +13,7 @@ interface RegisterExamProps {
 
 const RegisterExam: React.FC<RegisterExamProps> = ({ examCategories }) => {
   const [createMockExamMutation] = useCreateMockExam();
+  const { value: subTitleValue, onChange: onChangeSubTitleValue } = useInput();
   const { value: year, onSelectChange: onSelectYear } = useSelectChange<string>(
     { defaultValue: '' }
   );
@@ -35,9 +37,12 @@ const RegisterExam: React.FC<RegisterExamProps> = ({ examCategories }) => {
     generateArrayForSelect<string>(timeArray);
   const onCreateMockExam = async () => {
     if (!categoryForRegister) return message.error('카테고리를 선택해주세요.');
-    if (!year) return message.error('년도를 선택해주세요.');
-    if (!time) return message.error('회차를 선택해주세요.');
-    const title = year + '-' + categoryForRegister + '-' + time;
+    let title = '';
+    if (year && time) {
+      title = year + '-' + categoryForRegister + '-' + time;
+    } else if (subTitleValue) {
+      title = categoryForRegister + '-' + subTitleValue;
+    }
     const { data } = await createMockExamMutation({
       variables: {
         input: {
@@ -61,6 +66,11 @@ const RegisterExam: React.FC<RegisterExamProps> = ({ examCategories }) => {
       />
       <Select options={examYears} onSelect={onSelectYear} className="w-32" />
       <Select options={examTimes} onSelect={onSelectTime} className="w-32" />
+      <Input
+        value={subTitleValue}
+        onChange={onChangeSubTitleValue}
+        className="w-32"
+      />
       <Button onClick={onCreateMockExam} htmlType="button">
         시험등록
       </Button>

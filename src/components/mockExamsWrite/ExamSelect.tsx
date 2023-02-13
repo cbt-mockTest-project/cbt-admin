@@ -54,6 +54,7 @@ const ExamSelect: React.FC<ExamSelectInterface> = ({
       variables: {
         input: {
           category: value,
+          all: true,
         },
       },
     });

@@ -3,6 +3,7 @@ import React from 'react';
 
 interface ConfirmButtonProps {
   popupTitle: string;
+  className?: string;
   onConfirm?: (e?: React.MouseEvent<HTMLElement, MouseEvent>) => void;
   onCancel?: (e?: React.MouseEvent<HTMLElement, MouseEvent>) => void;
   onButtonClick?: (e?: React.MouseEvent<HTMLElement, MouseEvent>) => void;
@@ -32,9 +33,11 @@ const ConfirmButton: React.FC<ConfirmButtonProps> = ({
   buttonType = 'default',
   buttonLabel = 'button',
   disabled = false,
+  className,
 }) => {
   return (
     <Popconfirm
+      className={className}
       title={popupTitle}
       open={open}
       onConfirm={onConfirm}

@@ -1,9 +1,14 @@
 import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
-import { CreateMockExam_MUTATION } from '../grapql/mutation';
+import {
+  CreateMockExam_MUTATION,
+  EditMockExam_MUTATION,
+} from '../grapql/mutation';
 import {
   CreateMockExamMutation,
   CreateMockExamMutationVariables,
+  EditMockExamMutation,
+  EditMockExamMutationVariables,
 } from '../grapql/mutation.generated';
 import {
   ReadAllMockExamCategory_Query,
@@ -62,6 +67,7 @@ export const useReadAllMockExams = () => {
         input: {
           query: router.query.s === undefined ? '' : String(router.query.s),
           category: router.query.c === undefined ? '' : String(router.query.c),
+          all: true,
         },
       },
     }
@@ -87,3 +93,8 @@ export const useCreateMockExam = () => {
     }
   );
 };
+
+export const useEditMocmExam = () =>
+  useMutation<EditMockExamMutation, EditMockExamMutationVariables>(
+    EditMockExam_MUTATION
+  );

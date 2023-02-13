@@ -68,4 +68,22 @@ export const EditMockExamQuestion_MUTATION = gql`
       error
     }
   }
-`
+`;
+
+export const Revalidate_MUTATION = gql`
+  mutation Revalidate($input: RevalidateInput!) {
+    revalidate(input: $input) {
+      error
+      ok
+    }
+  }
+`;
+
+export const EditMockExam_MUTATION = gql`
+  mutation EditMockExam($input: EditMockExamInput!) {
+    editMockExam(input: $input) {
+      error
+      ok
+    }
+  }
+`;

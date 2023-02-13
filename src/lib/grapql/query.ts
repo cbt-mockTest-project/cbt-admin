@@ -17,6 +17,7 @@ export const ReadAllMockExam_QUERY = gql`
       mockExams {
         title
         id
+        approved
       }
     }
   }

@@ -52,6 +52,20 @@ export type EditMockExamQuestionMutationVariables = Types.Exact<{
 
 export type EditMockExamQuestionMutation = { __typename?: 'Mutation', editMockExamQuestion: { __typename?: 'EditMockExamQuestionOutput', ok: boolean, error?: string | null } };
 
+export type RevalidateMutationVariables = Types.Exact<{
+  input: Types.RevalidateInput;
+}>;
+
+
+export type RevalidateMutation = { __typename?: 'Mutation', revalidate: { __typename?: 'RevalidateOutput', error?: string | null, ok: boolean } };
+
+export type EditMockExamMutationVariables = Types.Exact<{
+  input: Types.EditMockExamInput;
+}>;
+
+
+export type EditMockExamMutation = { __typename?: 'Mutation', editMockExam: { __typename?: 'EditMockExamOutput', error?: string | null, ok: boolean } };
+
 
 export const CreateMockExamDocument = gql`
     mutation CreateMockExam($input: CreateMockExamInput!) {
@@ -139,4 +153,28 @@ export const EditMockExamQuestionDocument = gql`
 
 export function useEditMockExamQuestionMutation() {
   return Urql.useMutation<EditMockExamQuestionMutation, EditMockExamQuestionMutationVariables>(EditMockExamQuestionDocument);
+};
+export const RevalidateDocument = gql`
+    mutation Revalidate($input: RevalidateInput!) {
+  revalidate(input: $input) {
+    error
+    ok
+  }
+}
+    `;
+
+export function useRevalidateMutation() {
+  return Urql.useMutation<RevalidateMutation, RevalidateMutationVariables>(RevalidateDocument);
+};
+export const EditMockExamDocument = gql`
+    mutation EditMockExam($input: EditMockExamInput!) {
+  editMockExam(input: $input) {
+    error
+    ok
+  }
+}
+    `;
+
+export function useEditMockExamMutation() {
+  return Urql.useMutation<EditMockExamMutation, EditMockExamMutationVariables>(EditMockExamDocument);
 };
