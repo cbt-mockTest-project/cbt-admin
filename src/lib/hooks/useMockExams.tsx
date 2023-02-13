@@ -1,5 +1,6 @@
 import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
+import { MockExamCategoryTypes } from '../../types';
 import {
   CreateMockExam_MUTATION,
   EditMockExam_MUTATION,
@@ -31,7 +32,9 @@ export const useReadAllMockExamCategory = () => {
   return useQuery<
     ReadAllMockExamCategoriesQuery,
     ReadAllMockExamCategoriesQueryVariables
-  >(ReadAllMockExamCategory_Query);
+  >(ReadAllMockExamCategory_Query, {
+    variables: { input: { all: true, type: MockExamCategoryTypes.Written } },
+  });
 };
 
 export const useReadMockExam = () => {

@@ -89,7 +89,10 @@ const Home: NextPage = () => {
             </Button>
           </div>
           <Link href={MockExamRoutes.write}>
-            <Button>글쓰기</Button>
+            <Button>글쓰기(실기)</Button>
+          </Link>
+          <Link href={MockExamRoutes.writtendTest}>
+            <Button>글쓰기(필기)</Button>
           </Link>
         </div>
         <div className="flex flex-col">

@@ -2,8 +2,8 @@ import { gql } from '@apollo/client';
 import { FULL_QUESTION_FRAGMENT } from './fragment';
 
 export const ReadAllMockExamCategory_Query = gql`
-  query ReadAllMockExamCategories {
-    readAllMockExamCategories {
+  query ExampleQuery($input: ReadAllMockExamCategoriesInput) {
+    readAllMockExamCategories(input: $input) {
       categories {
         name
       }

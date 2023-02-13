@@ -12,10 +12,12 @@ interface QuestionAndSolutionProps {
   prevData?: Omit<EditMockExamQuestionInput, 'id'>;
   submitState?: boolean;
   setSubmitState?: React.Dispatch<SetStateAction<boolean>>;
+  hasSolution?: boolean;
 }
 
 const QuestionAndSolution: React.FC<QuestionAndSolutionProps> = ({
   type = 'write',
+  hasSolution = true,
   prevData,
   submitState,
   setSubmitState,
@@ -85,28 +87,29 @@ const QuestionAndSolution: React.FC<QuestionAndSolutionProps> = ({
             defaultValues={question_img}
           />
         </div>
-        <div className="flex flex-col flex-1 gap-2">
-          <span>정답</span>
-          <Controller
-            name="solution"
-            control={control}
-            rules={{ required: true }}
-            render={({ field }) => (
-              <TextArea
-                onChange={field.onChange}
-                className="h-60"
-                defaultValue={solution}
-              />
+        {hasSolution && (
+          <div className="flex flex-col flex-1 gap-2">
+            <span>정답</span>
+            <Controller
+              name="solution"
+              control={control}
+              render={({ field }) => (
+                <TextArea
+                  onChange={field.onChange}
+                  className="h-60"
+                  defaultValue={solution}
+                />
+              )}
+            />
+            {formState.errors.question?.type === 'required' && (
+              <ErrorText content="정답은 필수입니다." />
             )}
-          />
-          {formState.errors.question?.type === 'required' && (
-            <ErrorText content="정답은 필수입니다." />
-          )}
-          <UploadImages
-            onFileChange={onSolutionImageChange}
-            defaultValues={solution_img}
-          />
-        </div>
+            <UploadImages
+              onFileChange={onSolutionImageChange}
+              defaultValues={solution_img}
+            />
+          </div>
+        )}
       </div>
     </>
   );

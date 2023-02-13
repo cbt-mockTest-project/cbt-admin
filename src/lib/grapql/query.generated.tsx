@@ -4,10 +4,12 @@ import gql from 'graphql-tag';
 import { FullQuestionPartsFragmentDoc } from './fragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type ReadAllMockExamCategoriesQueryVariables = Types.Exact<{ [key: string]: never; }>;
+export type ExampleQueryQueryVariables = Types.Exact<{
+  input?: Types.InputMaybe<Types.ReadAllMockExamCategoriesInput>;
+}>;
 
 
-export type ReadAllMockExamCategoriesQuery = { __typename?: 'Query', readAllMockExamCategories: { __typename?: 'ReadAllMockExamCategoriesOutput', categories: Array<{ __typename?: 'MockExamCategory', name: string }> } };
+export type ExampleQueryQuery = { __typename?: 'Query', readAllMockExamCategories: { __typename?: 'ReadAllMockExamCategoriesOutput', categories: Array<{ __typename?: 'MockExamCategory', name: string }> } };
 
 export type ReadAllMockExamQueryVariables = Types.Exact<{
   input: Types.ReadAllMockExamsInput;
@@ -28,14 +30,14 @@ export type ReadMockExamQuestionQueryVariables = Types.Exact<{
 }>;
 
 
-export type ReadMockExamQuestionQuery = { __typename?: 'Query', readMockExamQuestion: { __typename?: 'ReadMockExamQuestionOutput', mockExamQusetion: { __typename?: 'MockExamQuestion', id: number, question: string, solution: string, number: number, question_img?: Array<{ __typename?: 'MockExamImageType', url: string, name: string, uid: string }> | null, solution_img?: Array<{ __typename?: 'MockExamImageType', name: string, uid: string, url: string }> | null, mockExam: { __typename?: 'MockExam', title: string } } } };
+export type ReadMockExamQuestionQuery = { __typename?: 'Query', readMockExamQuestion: { __typename?: 'ReadMockExamQuestionOutput', mockExamQusetion: { __typename?: 'MockExamQuestion', id: number, question: string, solution?: string | null, number: number, question_img?: Array<{ __typename?: 'MockExamImageType', url: string, name: string, uid: string }> | null, solution_img?: Array<{ __typename?: 'MockExamImageType', name: string, uid: string, url: string }> | null, mockExam: { __typename?: 'MockExam', title: string } } } };
 
 export type ReadMockExamQueryVariables = Types.Exact<{
   input: Types.ReadMockExamInput;
 }>;
 
 
-export type ReadMockExamQuery = { __typename?: 'Query', readMockExam: { __typename?: 'ReadMockExamOutput', mockExam: { __typename?: 'MockExam', title: string, approved: boolean, mockExamQuestion: Array<{ __typename?: 'MockExamQuestion', question: string, solution: string, id: number, number: number, approved: boolean, question_img?: Array<{ __typename?: 'MockExamImageType', url: string }> | null, solution_img?: Array<{ __typename?: 'MockExamImageType', url: string }> | null, mockExamQuestionFeedback: Array<{ __typename?: 'MockExamQuestionFeedback', content: string, id: number }> }> } } };
+export type ReadMockExamQuery = { __typename?: 'Query', readMockExam: { __typename?: 'ReadMockExamOutput', mockExam: { __typename?: 'MockExam', title: string, approved: boolean, mockExamQuestion: Array<{ __typename?: 'MockExamQuestion', question: string, solution?: string | null, id: number, number: number, approved: boolean, question_img?: Array<{ __typename?: 'MockExamImageType', url: string }> | null, solution_img?: Array<{ __typename?: 'MockExamImageType', url: string }> | null, mockExamQuestionFeedback: Array<{ __typename?: 'MockExamQuestionFeedback', content: string, id: number }> }> } } };
 
 export type MeQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
@@ -50,9 +52,9 @@ export type ReadMockExamQuestionNumbersQueryVariables = Types.Exact<{
 export type ReadMockExamQuestionNumbersQuery = { __typename?: 'Query', readMockExamQuestionNumbers: { __typename?: 'ReadMockExamQuestionNumbersOutput', questionNumbers: Array<number> } };
 
 
-export const ReadAllMockExamCategoriesDocument = gql`
-    query ReadAllMockExamCategories {
-  readAllMockExamCategories {
+export const ExampleQueryDocument = gql`
+    query ExampleQuery($input: ReadAllMockExamCategoriesInput) {
+  readAllMockExamCategories(input: $input) {
     categories {
       name
     }
@@ -60,8 +62,8 @@ export const ReadAllMockExamCategoriesDocument = gql`
 }
     `;
 
-export function useReadAllMockExamCategoriesQuery(options?: Omit<Urql.UseQueryArgs<ReadAllMockExamCategoriesQueryVariables>, 'query'>) {
-  return Urql.useQuery<ReadAllMockExamCategoriesQuery, ReadAllMockExamCategoriesQueryVariables>({ query: ReadAllMockExamCategoriesDocument, ...options });
+export function useExampleQueryQuery(options?: Omit<Urql.UseQueryArgs<ExampleQueryQueryVariables>, 'query'>) {
+  return Urql.useQuery<ExampleQueryQuery, ExampleQueryQueryVariables>({ query: ExampleQueryDocument, ...options });
 };
 export const ReadAllMockExamDocument = gql`
     query ReadAllMockExam($input: ReadAllMockExamsInput!) {

@@ -43,7 +43,7 @@ export type CreateMockExamQuestionMutationVariables = Types.Exact<{
 }>;
 
 
-export type CreateMockExamQuestionMutation = { __typename?: 'Mutation', createMockExamQuestion: { __typename?: 'CreateMockExamQuestionOutput', ok: boolean, error?: string | null } };
+export type CreateMockExamQuestionMutation = { __typename?: 'Mutation', createMockExamQuestion: { __typename?: 'CreateMockExamQuestionOutput', ok: boolean, error?: string | null, questionId?: number | null } };
 
 export type EditMockExamQuestionMutationVariables = Types.Exact<{
   input: Types.EditMockExamQuestionInput;
@@ -135,6 +135,7 @@ export const CreateMockExamQuestionDocument = gql`
   createMockExamQuestion(input: $input) {
     ok
     error
+    questionId
   }
 }
     `;

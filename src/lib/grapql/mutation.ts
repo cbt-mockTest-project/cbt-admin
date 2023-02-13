@@ -57,6 +57,7 @@ export const CreateMockExamQuestion_MUTATION = gql`
     createMockExamQuestion(input: $input) {
       ok
       error
+      questionId
     }
   }
 `;
