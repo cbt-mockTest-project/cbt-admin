@@ -78,7 +78,7 @@ const Home: NextPage = () => {
             <Select
               labelInValue
               showSearch={true}
-              className=" w-52 "
+              className=" w-96 "
               onSearch={debounceOnSearch}
               onSelect={onSelect}
               options={convertedSearchData}
